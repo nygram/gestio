@@ -98,6 +98,11 @@ public class vistaEntrada extends javax.swing.JFrame {
                 taulaTecnicsMouseClicked(evt);
             }
         });
+        taulaTecnics.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                taulaTecnicsKeyReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(taulaTecnics);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -354,14 +359,6 @@ public class vistaEntrada extends javax.swing.JFrame {
         
     }//GEN-LAST:event_tornarButtonActionPerformed
 
-    private void txtCodiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodiActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodiActionPerformed
-
-    private void txtNifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNifActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNifActionPerformed
-
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
         
@@ -370,6 +367,18 @@ public class vistaEntrada extends javax.swing.JFrame {
     private void taulaTecnicsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_taulaTecnicsMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_taulaTecnicsMouseClicked
+
+    private void txtNifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNifActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNifActionPerformed
+
+    private void txtCodiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodiActionPerformed
+
+    private void taulaTecnicsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_taulaTecnicsKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_taulaTecnicsKeyReleased
 
    
 
@@ -387,8 +396,8 @@ public class vistaEntrada extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel8;
     public javax.swing.JLabel jLabel9;
     public javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane2;
+    public javax.swing.JPanel jPanel2;
+    public javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTabbedPane jTabbedPane1;
     public javax.swing.JTable taulaTecnics;
     public javax.swing.JButton tornarButton;

@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +20,7 @@ import modelo.consultesTecnics;
 import vista.vistaEntrada;
 //import vista.vistaTecnic;
 
-public class controladorTecnics implements ActionListener, MouseListener, WindowListener {
+public class controladorTecnics implements ActionListener, MouseListener, WindowListener, KeyListener {
 
     private Tecnics tecnic;
     //private vistaTecnic vista;
@@ -34,182 +35,190 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         entrad.cargarButton.addActionListener(this);
         entrad.tornarButton.addActionListener(this);
         entrad.taulaTecnics.addMouseListener(this);
+        entrad.taulaTecnics.addKeyListener(this);
         entrad.addWindowListener(this);
         //vista.afegirButton.addActionListener(this);
         //vista.llistaButton.addActionListener(this);
-        
+
     }
 
     public void iniciar() {
-       // entrad.setTitle("Tecnohome");
+        // entrad.setTitle("Tecnohome");
         entrad.setLocationRelativeTo(null);
-        
-        
-        
 
     }
-/*
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == vista.afegirButton) {
-            tecnic.setCodi_Tecnic(Integer.parseInt(vista.txtCodi.getText()));
-            tecnic.setNom(vista.txtNom.getText());
-            tecnic.setCognoms(vista.txtCognoms.getText());
-            tecnic.setNIF(vista.txtNif.getText());
-            tecnic.setAdreça(vista.txtAdreca.getText());
-            tecnic.setPoblacio(vista.txtPoblacio.getText());
-            tecnic.setCodi_Postal(Integer.parseInt(vista.txtCodipostal.getText()));
-            tecnic.setTel_Particular(Integer.parseInt(vista.txtTelefonParticular.getText()));
-            tecnic.setTel_Empresa(Integer.parseInt(vista.txtTelefonEmpresa.getText()));
-            tecnic.setExtensio(Integer.parseInt(vista.txtExtensio.getText()));
-            //tecnic.setAnalitzador_Combustio(vista.Analitzador_Combustio.getText());
-            //tecnic.setTargetes(vista.Targetes.getText());
-            //tecnic.setVehicle(vista.Vehicle.getText());
-            
 
-            if (modelo.insertar(tecnic)) {
-                JOptionPane.showMessageDialog(null, "correcto");
-                limpiar();
-                
-
-            }
-            
-            
-            else {
-                JOptionPane.showMessageDialog(null, "Error");
-            }
-
-        }if (e.getSource() == vista.llistaButton) {
-            vistaEntrada entrada = new vistaEntrada();
-            entrada.setVisible(true);
-            //vista.setVisible(false);
-        }
-         {
-            
-        }
-    }
-    
-    
-    public void limpiar(){
-        vista.txtCodi.setText(null);
-        vista.txtNom.setText(null);
-        vista.txtCognoms.setText(null);
-        vista.txtNif.setText(null);
-        vista.txtCodipostal.setText(null);
-        vista.txtAdreca.setText(null);
-        vista.txtPoblacio.setText(null);
-        vista.txtTelefonEmpresa.setText(null);
-        vista.txtTelefonParticular.setText(null);
-        vista.txtExtensio.setText(null);
-    }
-
-*/
     @Override
     public void mouseClicked(MouseEvent me) {
-        if (me.getSource() == entrad.taulaTecnics){
-        int fila = entrad.taulaTecnics.getSelectedRow();
-        String codigo = entrad.taulaTecnics.getValueAt(fila, 0).toString();
-        entrad.txtId.setText(codigo);
-                
-                
+        if (me.getSource() == entrad.taulaTecnics) {
+            int fila = entrad.taulaTecnics.getSelectedRow();
+            String codigo = entrad.taulaTecnics.getValueAt(fila, 0).toString();
+            entrad.txtId.setText(codigo);
+            if (me.getClickCount() == 2) {
+                entrad.jTabbedPane1.setSelectedIndex(1);
+                PreparedStatement ps;
+                ResultSet rs;
+
+                try {
+
+                    Conexion con = new Conexion();
+
+                    Connection conexion = con.getConnection();
+                    ps = conexion.prepareStatement("Select Id, codi_tecnic, nom, cognoms, nif, adreça, tel_particular, tel_empresa, extensio, codi_postal, poblacio from tecnics where Id = ?");
+                    ps.setInt(1, Integer.parseInt(codigo));
+                    rs = ps.executeQuery();
+
+                    while (rs.next()) {
+                        entrad.txtNif.setText(rs.getString("Nif"));
+                        entrad.txtAdreca.setText(rs.getString("Adreça"));
+                        entrad.txtNom.setText(rs.getString("Nom"));
+                        entrad.txtCodipostal.setText(rs.getString("Codi_Postal"));
+                        entrad.txtCognoms.setText(rs.getString("Cognoms"));
+                        entrad.txtPoblacio.setText(rs.getString("poblacio"));
+                        entrad.txtCodi.setText(rs.getString("codi_tecnic"));
+                        entrad.txtTelefonParticular.setText(rs.getString("tel_particular"));
+                        entrad.txtTelefonEmpresa.setText(rs.getString("tel_empresa"));
+                        entrad.txtExtensio.setText(rs.getString("extensio"));
+                        entrad.txtId.setText(rs.getString("Id"));
+
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("Error " + e);
                 }
-        
+
+            }
+
+        }
     }
 
     @Override
-    public void mousePressed(MouseEvent me) {
-        
+    public void mousePressed(MouseEvent me
+    ) {
+
     }
 
     @Override
-    public void mouseReleased(MouseEvent me) {
+    public void mouseReleased(MouseEvent me
+    ) {
     }
 
     @Override
-    public void mouseEntered(MouseEvent me) {
-        
+    public void mouseEntered(MouseEvent me
+    ) {
+
     }
 
     @Override
-    public void mouseExited(MouseEvent me) {
+    public void mouseExited(MouseEvent me
+    ) {
     }
 
     @Override
-    public void actionPerformed(ActionEvent ae) {
+    public void actionPerformed(ActionEvent ae
+    ) {
     }
 
     @Override
-    public void windowOpened(WindowEvent we) {
+    public void windowOpened(WindowEvent we
+    ) {
     }
 
     @Override
-    public void windowClosing(WindowEvent we) {
+    public void windowClosing(WindowEvent we
+    ) {
     }
 
     @Override
-    public void windowClosed(WindowEvent we) {
+    public void windowClosed(WindowEvent we
+    ) {
     }
 
     @Override
-    public void windowIconified(WindowEvent we) {
+    public void windowIconified(WindowEvent we
+    ) {
     }
 
     @Override
-    public void windowDeiconified(WindowEvent we) {
+    public void windowDeiconified(WindowEvent we
+    ) {
     }
 
+
     @Override
-    public void windowActivated(WindowEvent we) {
-         DefaultTableModel modeloTabla = new DefaultTableModel(){
-          public boolean isCellEditable(int rowIndex,int columnIndex){
-          return false;}
-         };
+    public void windowActivated(WindowEvent we
+    ) {
+        DefaultTableModel modeloTabla = new DefaultTableModel() {
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false;
+            }
+        };
         entrad.taulaTecnics.setModel(modeloTabla);
         //taulaTecnics.setEnabled(false);
-        
+
         entrad.jTabbedPane1.setSelectedIndex(0);
-        
-        
+
         PreparedStatement ps;
         ResultSet rs;
-        
-        try{
-            
+
+        try {
+
             Conexion con = new Conexion();
-            
+
             Connection conexion = con.getConnection();
-            
+
             ps = conexion.prepareStatement("Select Id, nom, cognoms, nif, poblacio from tecnics");
             rs = ps.executeQuery();
-            modeloTabla.addColumn("Id");
+            modeloTabla.addColumn("Codi");
             modeloTabla.addColumn("nom");
             modeloTabla.addColumn("cognoms");
             modeloTabla.addColumn("nif");
             modeloTabla.addColumn("poblacio");
-            
-            while(rs.next()){
-                Object fila [] = new Object [5];
+
+            while (rs.next()) {
+                Object fila[] = new Object[5];
                 for (int i = 0; i < 5; i++) {
-                    fila[i] = rs.getObject(i+1);
-                    
-                    
+                    fila[i] = rs.getObject(i + 1);
+
                 }
                 modeloTabla.addRow(fila);
             }
-            
-            
-            
-            
-            
-            
-        }catch (Exception e){
-            System.err.println("Error " +e);
-            
+
+        } catch (Exception e) {
+            System.err.println("Error " + e);
+
         }
     }
 
     @Override
-    public void windowDeactivated(WindowEvent we) {
+    public void windowDeactivated(WindowEvent we
+    ) {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void keyReleased(KeyEvent evt) {
+        try {
+                if (evt.getKeyCode() == 38 || evt.getKeyCode() == 40) {
+
+                    int fila = entrad.taulaTecnics.getSelectedRow();
+                    String codigo = entrad.taulaTecnics.getValueAt(fila, 0).toString();
+                    entrad.txtId.setText(codigo);
+
+                }
+            
+        } catch (Exception ex) {
+
+        }
+       
     }
 
 }
