@@ -19,6 +19,7 @@ public class Tecnohome {
         controlador.iniciar();
         entrada.setVisible(true);
         entrada.jTabbedPane1.setSelectedIndex(0);
+        System.out.println("holiiiii");
         
 
     }
