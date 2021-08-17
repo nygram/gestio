@@ -6,11 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelo.Conexion;
+import modelo.Tecnics;
+import vista.vistaEntrada;
 
 public class consultesTecnics extends Conexion {
 
     PreparedStatement ps;
     ResultSet rs;
+    private int codigo;
+    private vistaEntrada entrad;
 
     public boolean insertar(Tecnics tecnics) {
 
@@ -55,6 +60,8 @@ public class consultesTecnics extends Conexion {
 
         }
     }
+    
+  
     
     
     

@@ -99,6 +99,9 @@ public class vistaEntrada extends javax.swing.JFrame {
             }
         });
         taulaTecnics.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                taulaTecnicsKeyTyped(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 taulaTecnicsKeyReleased(evt);
             }
@@ -307,48 +310,6 @@ public class vistaEntrada extends javax.swing.JFrame {
 
     private void cargarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarButtonActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel modeloTabla = new DefaultTableModel();
-        taulaTecnics.setModel(modeloTabla);
-        taulaTecnics.setEnabled(false);
-        
-        jTabbedPane1.setSelectedIndex(0);
-        
-        
-        PreparedStatement ps;
-        ResultSet rs;
-        
-        try{
-            
-            Conexion con = new Conexion();
-            
-            Connection conexion = con.getConnection();
-            
-            ps = conexion.prepareStatement("Select nom, cognoms, nif, poblacio from tecnics");
-            rs = ps.executeQuery();
-            modeloTabla.addColumn("nom");
-            modeloTabla.addColumn("cognoms");
-            modeloTabla.addColumn("nif");
-            modeloTabla.addColumn("poblacio");
-            
-            while(rs.next()){
-                Object fila [] = new Object [4];
-                for (int i = 0; i < 4; i++) {
-                    fila[i] = rs.getObject(i+1);
-                    
-                    
-                }
-                modeloTabla.addRow(fila);
-            }
-            
-            
-            
-            
-            
-            
-        }catch (Exception e){
-            System.err.println("Error " +e);
-            
-        }
     }//GEN-LAST:event_cargarButtonActionPerformed
 
     private void tornarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tornarButtonActionPerformed
@@ -379,6 +340,10 @@ public class vistaEntrada extends javax.swing.JFrame {
     private void taulaTecnicsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_taulaTecnicsKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_taulaTecnicsKeyReleased
+
+    private void taulaTecnicsKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_taulaTecnicsKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_taulaTecnicsKeyTyped
 
    
 

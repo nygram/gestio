@@ -56,36 +56,8 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             entrad.txtId.setText(codigo);
             if (me.getClickCount() == 2) {
                 entrad.jTabbedPane1.setSelectedIndex(1);
-                PreparedStatement ps;
-                ResultSet rs;
-
-                try {
-
-                    Conexion con = new Conexion();
-
-                    Connection conexion = con.getConnection();
-                    ps = conexion.prepareStatement("Select Id, codi_tecnic, nom, cognoms, nif, adreça, tel_particular, tel_empresa, extensio, codi_postal, poblacio from tecnics where Id = ?");
-                    ps.setInt(1, Integer.parseInt(codigo));
-                    rs = ps.executeQuery();
-
-                    while (rs.next()) {
-                        entrad.txtNif.setText(rs.getString("Nif"));
-                        entrad.txtAdreca.setText(rs.getString("Adreça"));
-                        entrad.txtNom.setText(rs.getString("Nom"));
-                        entrad.txtCodipostal.setText(rs.getString("Codi_Postal"));
-                        entrad.txtCognoms.setText(rs.getString("Cognoms"));
-                        entrad.txtPoblacio.setText(rs.getString("poblacio"));
-                        entrad.txtCodi.setText(rs.getString("codi_tecnic"));
-                        entrad.txtTelefonParticular.setText(rs.getString("tel_particular"));
-                        entrad.txtTelefonEmpresa.setText(rs.getString("tel_empresa"));
-                        entrad.txtExtensio.setText(rs.getString("extensio"));
-                        entrad.txtId.setText(rs.getString("Id"));
-
-                    }
-
-                } catch (Exception e) {
-                    System.out.println("Error " + e);
-                }
+                carregaTecnic(Integer.parseInt(codigo));
+          
 
             }
 
@@ -144,10 +116,8 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
     ) {
     }
 
-
     @Override
-    public void windowActivated(WindowEvent we
-    ) {
+    public void windowActivated(WindowEvent we) {
         DefaultTableModel modeloTabla = new DefaultTableModel() {
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return false;
@@ -197,28 +167,74 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
 
     @Override
     public void keyTyped(KeyEvent e) {
+
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        
+        int fila = entrad.taulaTecnics.getSelectedRow();
+        String codigo = entrad.taulaTecnics.getValueAt(fila, 0).toString();
+        entrad.txtId.setText(codigo);
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            entrad.jTabbedPane1.setSelectedIndex(1);
+            carregaTecnic(Integer.parseInt(codigo));
+
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent evt) {
         try {
-                if (evt.getKeyCode() == 38 || evt.getKeyCode() == 40) {
+            if (evt.getKeyCode() == 38 || evt.getKeyCode() == 40) {
 
-                    int fila = entrad.taulaTecnics.getSelectedRow();
-                    String codigo = entrad.taulaTecnics.getValueAt(fila, 0).toString();
-                    entrad.txtId.setText(codigo);
+                int fila = entrad.taulaTecnics.getSelectedRow();
+                String codigo = entrad.taulaTecnics.getValueAt(fila, 0).toString();
+                entrad.txtId.setText(codigo);
 
-                }
-            
+            }
+
         } catch (Exception ex) {
 
         }
-       
+
+    }
+
+    public void carregaTecnic(int codigo) {
+
+        PreparedStatement ps;
+        ResultSet rs;
+
+        try {
+
+            Conexion con = new Conexion();
+
+            Connection conexion = con.getConnection();
+
+            ps = conexion.prepareStatement("Select Id, codi_tecnic, nom, cognoms, nif, adreça, tel_particular, tel_empresa, extensio, codi_postal, poblacio from tecnics where Id = ?");
+            ps.setInt(1, (codigo));
+            System.out.println("codigo es " + codigo);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                entrad.txtNif.setText(rs.getString("Nif"));
+                entrad.txtAdreca.setText(rs.getString("Adreça"));
+                entrad.txtNom.setText(rs.getString("Nom"));
+                entrad.txtCodipostal.setText(rs.getString("Codi_Postal"));
+                entrad.txtCognoms.setText(rs.getString("Cognoms"));
+                entrad.txtPoblacio.setText(rs.getString("poblacio"));
+                entrad.txtCodi.setText(rs.getString("codi_tecnic"));
+                entrad.txtTelefonParticular.setText(rs.getString("tel_particular"));
+                entrad.txtTelefonEmpresa.setText(rs.getString("tel_empresa"));
+                entrad.txtExtensio.setText(rs.getString("extensio"));
+                entrad.txtId.setText(rs.getString("Id"));
+
+            }
+
+        } catch (Exception ex) {
+            //ex.printStackTrace();
+            System.out.println("Error " + ex);
+        }
+
     }
 
 }
