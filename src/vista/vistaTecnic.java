@@ -183,7 +183,7 @@ public class vistaTecnic extends javax.swing.JFrame {
                 .addComponent(afegirButton)
                 .addGap(40, 40, 40)
                 .addComponent(llistaButton)
-                .addGap(0, 223, Short.MAX_VALUE))
+                .addGap(0, 299, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(52, 52, 52)
@@ -220,7 +220,7 @@ public class vistaTecnic extends javax.swing.JFrame {
                         .addComponent(jLabel12))
                     .addGap(46, 46, 46)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(52, Short.MAX_VALUE)))
+                    .addContainerGap(123, Short.MAX_VALUE)))
         );
 
         pack();

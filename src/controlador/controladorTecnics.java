@@ -1,17 +1,22 @@
 package controlador;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.event.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.KeyEvent;
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.HashSet;
 import java.util.LinkedList;
 import javax.naming.InterruptedNamingException;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.plaf.basic.BasicTabbedPaneUI.MouseHandler;
 import javax.swing.table.DefaultTableModel;
 import modelo.Conexion;
@@ -35,6 +40,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         entrad.cargarButton.addActionListener(this);
         entrad.tornarButton.addActionListener(this);
         entrad.taulaTecnics.addMouseListener(this);
+        entrad.jTabbedPane1.addMouseListener(this);
         entrad.taulaTecnics.addKeyListener(this);
         entrad.addWindowListener(this);
         //vista.afegirButton.addActionListener(this);
@@ -57,9 +63,13 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             if (me.getClickCount() == 2) {
                 entrad.jTabbedPane1.setSelectedIndex(1);
                 carregaTecnic(Integer.parseInt(codigo));
-          
 
             }
+
+        }
+        if (me.getSource() == entrad.jTabbedPane1) {
+            int codi = Integer.parseInt(entrad.txtId.getText());
+            carregaTecnic(codi);
 
         }
     }
@@ -124,6 +134,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             }
         };
         entrad.taulaTecnics.setModel(modeloTabla);
+        entrad.txtId.setText("1");
         //taulaTecnics.setEnabled(false);
 
         entrad.jTabbedPane1.setSelectedIndex(0);
@@ -178,6 +189,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             entrad.jTabbedPane1.setSelectedIndex(1);
             carregaTecnic(Integer.parseInt(codigo));
+            
 
         }
     }
@@ -212,7 +224,6 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
 
             ps = conexion.prepareStatement("Select Id, codi_tecnic, nom, cognoms, nif, adreça, tel_particular, tel_empresa, extensio, codi_postal, poblacio from tecnics where Id = ?");
             ps.setInt(1, (codigo));
-            System.out.println("codigo es " + codigo);
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -229,6 +240,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
                 entrad.txtId.setText(rs.getString("Id"));
 
             }
+            habilitarCampos(entrad.jPanel2, false);
 
         } catch (Exception ex) {
             //ex.printStackTrace();
@@ -237,4 +249,14 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
 
     }
 
+    public void habilitarCampos(Container container, boolean b) {
+        Component[] components = container.getComponents();
+        for (Component component : components) {
+        if (component instanceof JTextField) {
+            JTextField txtField = ((JTextField) component);
+            txtField.setEditable(b);
+        }
+    }
+
+}
 }

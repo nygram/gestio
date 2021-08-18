@@ -52,8 +52,10 @@ public class vistaEntrada extends javax.swing.JFrame {
         cargarButton = new javax.swing.JButton();
         tornarButton = new javax.swing.JButton();
         txtId = new javax.swing.JTextField();
+        btnModificar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(204, 204, 204));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -63,8 +65,12 @@ public class vistaEntrada extends javax.swing.JFrame {
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jTabbedPane1.setToolTipText("test");
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane1MouseClicked(evt);
+            }
+        });
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         taulaTecnics.setModel(new javax.swing.table.DefaultTableModel(
@@ -125,8 +131,6 @@ public class vistaEntrada extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Tècnics", jPanel1);
-
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel8.setText("Cognoms");
 
@@ -276,6 +280,14 @@ public class vistaEntrada extends javax.swing.JFrame {
 
         txtId.setText("jTextField1");
 
+        btnModificar.setText("Modifica");
+        btnModificar.setToolTipText("");
+        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModificarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -284,23 +296,30 @@ public class vistaEntrada extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jTabbedPane1))
             .addGroup(layout.createSequentialGroup()
-                .addGap(417, 417, 417)
+                .addGap(296, 296, 296)
                 .addComponent(cargarButton)
-                .addGap(62, 62, 62)
-                .addComponent(tornarButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnModificar)
+                .addGap(87, 87, 87)
+                .addComponent(tornarButton)
+                .addGap(124, 124, 124)
                 .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(126, 126, 126))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cargarButton)
-                    .addComponent(tornarButton)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cargarButton)
+                            .addComponent(tornarButton)
+                            .addComponent(btnModificar))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -314,9 +333,7 @@ public class vistaEntrada extends javax.swing.JFrame {
 
     private void tornarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tornarButtonActionPerformed
         // TODO add your handling code here:
-        vistaTecnic tecnic = new vistaTecnic();
         //tecnic.setVisible(true);
-        this.setVisible(false);
         
     }//GEN-LAST:event_tornarButtonActionPerformed
 
@@ -345,9 +362,18 @@ public class vistaEntrada extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_taulaTecnicsKeyTyped
 
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
+
+    private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModificarMouseClicked
+
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnModificar;
     public javax.swing.JButton cargarButton;
     public javax.swing.JLabel jLabel10;
     public javax.swing.JLabel jLabel11;
