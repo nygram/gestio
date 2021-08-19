@@ -112,7 +112,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             if (entrad.jTabbedPane1.getSelectedIndex() == 1) {
 
                 tecnic.setCodi_Postal(Integer.parseInt(entrad.txtCodipostal.getText()));
-                tecnic.setCodi_Tecnic(Integer.parseInt(entrad.txtCodi.getText()));
+                tecnic.setCodi_Tecnic(entrad.txtCodi.getText());
                 tecnic.setAdreça(entrad.txtAdreca.getText());
                 tecnic.setCognoms(entrad.txtCognoms.getText());
                 tecnic.setExtensio(Integer.parseInt(entrad.txtExtensio.getText()));
@@ -154,7 +154,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         if (ae.getSource() == entrad.btnInsertar){
             
                 tecnic.setCodi_Postal(Integer.parseInt(entrad.txtCodipostal.getText()));
-                tecnic.setCodi_Tecnic(Integer.parseInt(entrad.txtCodi.getText()));
+                tecnic.setCodi_Tecnic(entrad.txtCodi.getText());
                 tecnic.setAdreça(entrad.txtAdreca.getText());
                 tecnic.setCognoms(entrad.txtCognoms.getText());
                 tecnic.setExtensio(Integer.parseInt(entrad.txtExtensio.getText()));
@@ -336,7 +336,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
 
             Connection conexion = con.getConnection();
 
-            ps = conexion.prepareStatement("Select Id, nom, cognoms, nif, poblacio from tecnics order by id");
+            ps = conexion.prepareStatement("Select codi_tecnic, nom, cognoms, nif, poblacio from tecnics order by id");
             rs = ps.executeQuery();
             modeloTabla.addColumn("Codi");
             modeloTabla.addColumn("nom");
