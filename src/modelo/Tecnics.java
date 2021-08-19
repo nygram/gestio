@@ -6,6 +6,7 @@ public class Tecnics {
     
     
     int Codi_Tecnic ;
+    int Id;
     String Nom;
     String Cognoms;
     String NIF;
@@ -18,6 +19,8 @@ public class Tecnics {
     String Analitzador_Combustio;
     String Targetes;
     String Vehicle;
+    
+    
 
     public int getCodi_Tecnic() {
         return Codi_Tecnic;
@@ -27,6 +30,16 @@ public class Tecnics {
         this.Codi_Tecnic = Codi_Tecnic;
     }
 
+    
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int Id) {
+        this.Id = Id;
+    }
+    
     public String getNom() {
         return Nom;
     }

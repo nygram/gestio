@@ -1,5 +1,6 @@
 package controlador;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.*;
@@ -7,18 +8,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.KeyEvent;
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.util.HashSet;
-import java.util.LinkedList;
+//import java.sql.ResultSetMetaData;
+//import java.util.HashSet;
+//import java.util.LinkedList;
+import java.util.Vector;
 import javax.naming.InterruptedNamingException;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.plaf.basic.BasicTabbedPaneUI.MouseHandler;
+//import javax.swing.plaf.basic.BasicTabbedPaneUI.MouseHandler;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import modelo.Conexion;
 import modelo.Tecnics;
 import modelo.consultesTecnics;
@@ -37,14 +40,15 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         //this.vista = vista;
         this.entrad = entrad;
         this.modelo = modelo;
-        entrad.cargarButton.addActionListener(this);
-        entrad.tornarButton.addActionListener(this);
+        entrad.btnInsertar.addActionListener(this);
+        entrad.btnSalir.addActionListener(this);
         entrad.taulaTecnics.addMouseListener(this);
         entrad.jTabbedPane1.addMouseListener(this);
         entrad.taulaTecnics.addKeyListener(this);
         entrad.addWindowListener(this);
-        //vista.afegirButton.addActionListener(this);
-        //vista.llistaButton.addActionListener(this);
+        entrad.btnModificar.addActionListener(this);
+        entrad.btnNuevo.addActionListener(this);
+        entrad.btnBorrar.addActionListener(this);
 
     }
 
@@ -68,9 +72,13 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
 
         }
         if (me.getSource() == entrad.jTabbedPane1) {
+            if(entrad.jTabbedPane1.getSelectedIndex() == 1){
             int codi = Integer.parseInt(entrad.txtId.getText());
             carregaTecnic(codi);
-
+            }
+            if(entrad.jTabbedPane1.getSelectedIndex() == 0){
+             entrad.btnModificar.setVisible(false);
+            }
         }
     }
 
@@ -97,8 +105,96 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
     }
 
     @Override
-    public void actionPerformed(ActionEvent ae
-    ) {
+    public void actionPerformed(ActionEvent ae) {
+
+        if (ae.getSource() == entrad.btnModificar) {
+
+            if (entrad.jTabbedPane1.getSelectedIndex() == 1) {
+
+                tecnic.setCodi_Postal(Integer.parseInt(entrad.txtCodipostal.getText()));
+                tecnic.setCodi_Tecnic(Integer.parseInt(entrad.txtCodi.getText()));
+                tecnic.setAdreça(entrad.txtAdreca.getText());
+                tecnic.setCognoms(entrad.txtCognoms.getText());
+                tecnic.setExtensio(Integer.parseInt(entrad.txtExtensio.getText()));
+                tecnic.setNIF(entrad.txtNif.getText());
+                tecnic.setNom(entrad.txtNom.getText());
+                tecnic.setPoblacio(entrad.txtPoblacio.getText());
+                tecnic.setTel_Empresa(Integer.parseInt(entrad.txtTelefonEmpresa.getText()));
+                tecnic.setTel_Particular(Integer.parseInt(entrad.txtTelefonParticular.getText()));
+                tecnic.setId(Integer.parseInt(entrad.txtId.getText()));
+                
+                
+                //modelo.creaTecnic();
+                
+                if (modelo.modificar(tecnic)) {
+                    entrad.jTabbedPane1.setSelectedIndex(0);
+                    JOptionPane.showMessageDialog(null, "Modificado correctamente");
+                    carregaTaula();
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "No modificado");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleccion técnic a modificar");
+            }
+
+        }
+        
+        if (ae.getSource() == entrad.btnNuevo){
+            
+            entrad.jTabbedPane1.setSelectedIndex(1);
+            entrad.btnInsertar.setVisible(true);
+            entrad.btnNuevo.setVisible(false);
+            limpiarCampos(entrad.jPanel2);
+            
+            
+            
+        }
+        if (ae.getSource() == entrad.btnInsertar){
+            
+                tecnic.setCodi_Postal(Integer.parseInt(entrad.txtCodipostal.getText()));
+                tecnic.setCodi_Tecnic(Integer.parseInt(entrad.txtCodi.getText()));
+                tecnic.setAdreça(entrad.txtAdreca.getText());
+                tecnic.setCognoms(entrad.txtCognoms.getText());
+                tecnic.setExtensio(Integer.parseInt(entrad.txtExtensio.getText()));
+                tecnic.setNIF(entrad.txtNif.getText());
+                tecnic.setNom(entrad.txtNom.getText());
+                tecnic.setPoblacio(entrad.txtPoblacio.getText());
+                tecnic.setTel_Empresa(Integer.parseInt(entrad.txtTelefonEmpresa.getText()));
+                tecnic.setTel_Particular(Integer.parseInt(entrad.txtTelefonParticular.getText()));
+                
+                if (modelo.insertar(tecnic)){
+                    entrad.jTabbedPane1.setSelectedIndex(0);
+                    JOptionPane.showMessageDialog(null, "Insertado correctamente");
+                    carregaTaula();
+                    
+                    
+                }else {
+                    JOptionPane.showMessageDialog(null, "No insertado");
+                }
+            
+        }
+        if (ae.getSource() == entrad.btnSalir){
+            System.exit(0);
+        }
+        if (ae.getSource() == entrad.btnBorrar){
+            
+                
+                tecnic.setId(Integer.parseInt(entrad.txtId.getText()));
+                                
+                if (modelo.borrar(tecnic)){
+                    entrad.jTabbedPane1.setSelectedIndex(0);
+                    JOptionPane.showMessageDialog(null, "Borrado correctamente");
+                    carregaTaula();
+                    
+                    
+                }else {
+                    JOptionPane.showMessageDialog(null, "No borrado");
+                }
+            
+        }
+        
     }
 
     @Override
@@ -128,52 +224,15 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
 
     @Override
     public void windowActivated(WindowEvent we) {
-        DefaultTableModel modeloTabla = new DefaultTableModel() {
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return false;
-            }
-        };
-        entrad.taulaTecnics.setModel(modeloTabla);
-        entrad.txtId.setText("1");
-        //taulaTecnics.setEnabled(false);
+        entrad.btnModificar.setVisible(false);
+        entrad.btnInsertar.setVisible(false);
+        carregaTaula();
 
-        entrad.jTabbedPane1.setSelectedIndex(0);
-
-        PreparedStatement ps;
-        ResultSet rs;
-
-        try {
-
-            Conexion con = new Conexion();
-
-            Connection conexion = con.getConnection();
-
-            ps = conexion.prepareStatement("Select Id, nom, cognoms, nif, poblacio from tecnics");
-            rs = ps.executeQuery();
-            modeloTabla.addColumn("Codi");
-            modeloTabla.addColumn("nom");
-            modeloTabla.addColumn("cognoms");
-            modeloTabla.addColumn("nif");
-            modeloTabla.addColumn("poblacio");
-
-            while (rs.next()) {
-                Object fila[] = new Object[5];
-                for (int i = 0; i < 5; i++) {
-                    fila[i] = rs.getObject(i + 1);
-
-                }
-                modeloTabla.addRow(fila);
-            }
-
-        } catch (Exception e) {
-            System.err.println("Error " + e);
-
-        }
     }
 
     @Override
-    public void windowDeactivated(WindowEvent we
-    ) {
+    public void windowDeactivated(WindowEvent we) {
+
     }
 
     @Override
@@ -189,7 +248,6 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             entrad.jTabbedPane1.setSelectedIndex(1);
             carregaTecnic(Integer.parseInt(codigo));
-            
 
         }
     }
@@ -215,6 +273,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
 
         PreparedStatement ps;
         ResultSet rs;
+        entrad.btnModificar.setVisible(true);
 
         try {
 
@@ -240,23 +299,86 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
                 entrad.txtId.setText(rs.getString("Id"));
 
             }
-            habilitarCampos(entrad.jPanel2, false);
+            rs.close();
+            //habilitarCampos(entrad.jPanel2, false);
 
         } catch (Exception ex) {
-            //ex.printStackTrace();
+            ex.printStackTrace();
             System.out.println("Error " + ex);
         }
 
     }
 
-    public void habilitarCampos(Container container, boolean b) {
-        Component[] components = container.getComponents();
-        for (Component component : components) {
-        if (component instanceof JTextField) {
-            JTextField txtField = ((JTextField) component);
-            txtField.setEditable(b);
+    public void carregaTaula() {
+        DefaultTableModel modeloTabla = new DefaultTableModel() {
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false;
+            }
+
+        };
+        entrad.taulaTecnics.setModel(modeloTabla);
+        entrad.taulaTecnics.setRowSorter(new TableRowSorter<DefaultTableModel>(modeloTabla));
+        entrad.taulaTecnics.setAutoCreateRowSorter(true);
+        entrad.taulaTecnics.setBackground(Color.white);
+        entrad.taulaTecnics.setSelectionBackground(new Color(250, 201, 104));
+
+        entrad.txtId.setText("1");
+        //taulaTecnics.setEnabled(false);
+        entrad.btnModificar.setVisible(false);
+        entrad.jTabbedPane1.setSelectedIndex(0);
+
+        PreparedStatement ps;
+        ResultSet rs;
+
+        try {
+
+            Conexion con = new Conexion();
+
+            Connection conexion = con.getConnection();
+
+            ps = conexion.prepareStatement("Select Id, nom, cognoms, nif, poblacio from tecnics order by id");
+            rs = ps.executeQuery();
+            modeloTabla.addColumn("Codi");
+            modeloTabla.addColumn("nom");
+            modeloTabla.addColumn("cognoms");
+            modeloTabla.addColumn("nif");
+            modeloTabla.addColumn("poblacio");
+
+            while (rs.next()) {
+                Object fila[] = new Object[5];
+                for (int i = 0; i < 5; i++) {
+                    fila[i] = rs.getObject(i + 1);
+
+                }
+                modeloTabla.addRow(fila);
+            }
+            rs.close();
+
+        } catch (Exception e) {
+            System.err.println("Error " + e);
+
         }
     }
 
-}
+    public void habilitarCampos(Container container, boolean b) {
+        Component[] components = container.getComponents();
+        for (Component component : components) {
+            if (component instanceof JTextField) {
+                JTextField txtField = ((JTextField) component);
+                txtField.setEditable(b);
+            }
+        }
+
+    }
+    
+    public void limpiarCampos(Container container) {
+        Component[] components = container.getComponents();
+        for (Component component : components) {
+            if (component instanceof JTextField) {
+                JTextField txtField = ((JTextField) component);
+                txtField.setText(null);
+            }
+        }
+
+    }
 }
