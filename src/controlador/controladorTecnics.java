@@ -24,8 +24,11 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import modelo.Conexion;
 import modelo.Tecnics;
+import modelo.Vehicles;
 import modelo.consultesTecnics;
+import modelo.consultesVehicles;
 import vista.vistaEntrada;
+import vista.vistaVehicle;
 //import vista.vistaTecnic;
 
 public class controladorTecnics implements ActionListener, MouseListener, WindowListener, KeyListener {
@@ -34,6 +37,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
     //private vistaTecnic vista;
     private vistaEntrada entrad;
     private consultesTecnics modelo;
+    private vistaVehicle vehicles;
 
     public controladorTecnics(Tecnics tecnic, vistaEntrada entrad, consultesTecnics modelo) {
         this.tecnic = tecnic;
@@ -49,6 +53,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         entrad.btnModificar.addActionListener(this);
         entrad.btnNuevo.addActionListener(this);
         entrad.btnBorrar.addActionListener(this);
+        entrad.btnVehicles.addActionListener(this);
 
     }
 
@@ -72,14 +77,15 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
 
         }
         if (me.getSource() == entrad.jTabbedPane1) {
-            if(entrad.jTabbedPane1.getSelectedIndex() == 1){
-            int codi = Integer.parseInt(entrad.txtId.getText());
-            carregaTecnic(codi);
+            if (entrad.jTabbedPane1.getSelectedIndex() == 1) {
+                String codi = entrad.txtId.getText();
+                carregaTecnic(Integer.parseInt(codi));
             }
-            if(entrad.jTabbedPane1.getSelectedIndex() == 0){
-             entrad.btnModificar.setVisible(false);
+            if (entrad.jTabbedPane1.getSelectedIndex() == 0) {
+                entrad.btnModificar.setVisible(false);
             }
         }
+
     }
 
     @Override
@@ -112,7 +118,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             if (entrad.jTabbedPane1.getSelectedIndex() == 1) {
 
                 tecnic.setCodi_Postal(Integer.parseInt(entrad.txtCodipostal.getText()));
-                tecnic.setCodi_Tecnic(entrad.txtCodi.getText());
+                tecnic.setCodi_Tecnic(Integer.parseInt(entrad.txtCodi.getText()));
                 tecnic.setAdreça(entrad.txtAdreca.getText());
                 tecnic.setCognoms(entrad.txtCognoms.getText());
                 tecnic.setExtensio(Integer.parseInt(entrad.txtExtensio.getText()));
@@ -122,10 +128,8 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
                 tecnic.setTel_Empresa(Integer.parseInt(entrad.txtTelefonEmpresa.getText()));
                 tecnic.setTel_Particular(Integer.parseInt(entrad.txtTelefonParticular.getText()));
                 tecnic.setId(Integer.parseInt(entrad.txtId.getText()));
-                
-                
+
                 //modelo.creaTecnic();
-                
                 if (modelo.modificar(tecnic)) {
                     entrad.jTabbedPane1.setSelectedIndex(0);
                     JOptionPane.showMessageDialog(null, "Modificado correctamente");
@@ -140,61 +144,66 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             }
 
         }
-        
-        if (ae.getSource() == entrad.btnNuevo){
-            
+
+        if (ae.getSource() == entrad.btnNuevo) {
+
             entrad.jTabbedPane1.setSelectedIndex(1);
             entrad.btnInsertar.setVisible(true);
             entrad.btnNuevo.setVisible(false);
             limpiarCampos(entrad.jPanel2);
-            
-            
-            
+
         }
-        if (ae.getSource() == entrad.btnInsertar){
-            
-                tecnic.setCodi_Postal(Integer.parseInt(entrad.txtCodipostal.getText()));
-                tecnic.setCodi_Tecnic(entrad.txtCodi.getText());
-                tecnic.setAdreça(entrad.txtAdreca.getText());
-                tecnic.setCognoms(entrad.txtCognoms.getText());
-                tecnic.setExtensio(Integer.parseInt(entrad.txtExtensio.getText()));
-                tecnic.setNIF(entrad.txtNif.getText());
-                tecnic.setNom(entrad.txtNom.getText());
-                tecnic.setPoblacio(entrad.txtPoblacio.getText());
-                tecnic.setTel_Empresa(Integer.parseInt(entrad.txtTelefonEmpresa.getText()));
-                tecnic.setTel_Particular(Integer.parseInt(entrad.txtTelefonParticular.getText()));
-                
-                if (modelo.insertar(tecnic)){
-                    entrad.jTabbedPane1.setSelectedIndex(0);
-                    JOptionPane.showMessageDialog(null, "Insertado correctamente");
-                    carregaTaula();
-                    
-                    
-                }else {
-                    JOptionPane.showMessageDialog(null, "No insertado");
-                }
-            
+        if (ae.getSource() == entrad.btnInsertar) {
+
+            tecnic.setCodi_Postal(Integer.parseInt(entrad.txtCodipostal.getText()));
+            tecnic.setCodi_Tecnic(Integer.parseInt(entrad.txtCodi.getText()));
+            tecnic.setAdreça(entrad.txtAdreca.getText());
+            tecnic.setCognoms(entrad.txtCognoms.getText());
+            tecnic.setExtensio(Integer.parseInt(entrad.txtExtensio.getText()));
+            tecnic.setNIF(entrad.txtNif.getText());
+            tecnic.setNom(entrad.txtNom.getText());
+            tecnic.setPoblacio(entrad.txtPoblacio.getText());
+            tecnic.setTel_Empresa(Integer.parseInt(entrad.txtTelefonEmpresa.getText()));
+            tecnic.setTel_Particular(Integer.parseInt(entrad.txtTelefonParticular.getText()));
+
+            if (modelo.insertar(tecnic)) {
+                entrad.jTabbedPane1.setSelectedIndex(0);
+                JOptionPane.showMessageDialog(null, "Insertado correctamente");
+                entrad.btnNuevo.setVisible(true);
+                carregaTaula();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No insertado");
+            }
+
         }
-        if (ae.getSource() == entrad.btnSalir){
+        if (ae.getSource() == entrad.btnSalir) {
             System.exit(0);
         }
-        if (ae.getSource() == entrad.btnBorrar){
-            
-                
-                tecnic.setId(Integer.parseInt(entrad.txtId.getText()));
-                                
-                if (modelo.borrar(tecnic)){
-                    entrad.jTabbedPane1.setSelectedIndex(0);
-                    JOptionPane.showMessageDialog(null, "Borrado correctamente");
-                    carregaTaula();
-                    
-                    
-                }else {
-                    JOptionPane.showMessageDialog(null, "No borrado");
-                }
-            
+        if (ae.getSource() == entrad.btnBorrar) {
+
+            tecnic.setId(Integer.parseInt(entrad.txtId.getText()));
+
+            if (modelo.borrar(tecnic)) {
+                entrad.jTabbedPane1.setSelectedIndex(0);
+                JOptionPane.showMessageDialog(null, "Borrado correctamente");
+                carregaTaula();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No borrado");
+            }
+
         }
-        
+        if (ae.getSource() == entrad.btnVehicles) {
+
+            consultesVehicles consultavehicle = new consultesVehicles();
+            Vehicles vehicle = new Vehicles();
+            vistaVehicle vista = new vistaVehicle();
+            controladorVehicles controlavehicles = new controladorVehicles(vehicle, vista, consultavehicle);
+            vista.setVisible(true);
+
+        }
+
     }
 
     @Override
@@ -282,7 +291,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             Connection conexion = con.getConnection();
 
             ps = conexion.prepareStatement("Select Id, codi_tecnic, nom, cognoms, nif, adreça, tel_particular, tel_empresa, extensio, codi_postal, poblacio from tecnics where Id = ?");
-            ps.setInt(1, (codigo));
+            ps.setInt(1, ((codigo)));
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -322,7 +331,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         entrad.taulaTecnics.setBackground(Color.white);
         entrad.taulaTecnics.setSelectionBackground(new Color(250, 201, 104));
 
-        entrad.txtId.setText("1");
+        entrad.txtId.setText(null);
         //taulaTecnics.setEnabled(false);
         entrad.btnModificar.setVisible(false);
         entrad.jTabbedPane1.setSelectedIndex(0);
@@ -336,8 +345,9 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
 
             Connection conexion = con.getConnection();
 
-            ps = conexion.prepareStatement("Select codi_tecnic, nom, cognoms, nif, poblacio from tecnics order by id");
+            ps = conexion.prepareStatement("Select Id, codi_tecnic, nom, cognoms, nif, poblacio from tecnics order by id");
             rs = ps.executeQuery();
+            modeloTabla.addColumn("Id");
             modeloTabla.addColumn("Codi");
             modeloTabla.addColumn("nom");
             modeloTabla.addColumn("cognoms");
@@ -345,14 +355,15 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             modeloTabla.addColumn("poblacio");
 
             while (rs.next()) {
-                Object fila[] = new Object[5];
-                for (int i = 0; i < 5; i++) {
+                Object fila[] = new Object[6];
+                for (int i = 0; i < 6; i++) {
                     fila[i] = rs.getObject(i + 1);
 
                 }
                 modeloTabla.addRow(fila);
             }
             rs.close();
+            entrad.txtId.setText("1");
 
         } catch (Exception e) {
             System.err.println("Error " + e);
@@ -370,7 +381,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         }
 
     }
-    
+
     public void limpiarCampos(Container container) {
         Component[] components = container.getComponents();
         for (Component component : components) {

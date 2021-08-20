@@ -1,9 +1,13 @@
 package tecnohome;
 
 import controlador.controladorTecnics;
+import controlador.controladorVehicles;
 import modelo.Tecnics;
+import modelo.Vehicles;
 import modelo.consultesTecnics;
+import modelo.consultesVehicles;
 import vista.vistaEntrada;
+import vista.vistaVehicle;
 
 
 public class Tecnohome {

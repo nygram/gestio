@@ -5,7 +5,7 @@ public class Tecnics {
     
     
     
-    String Codi_Tecnic ;
+    int Codi_Tecnic ;
     int Id;
     String Nom;
     String Cognoms;
@@ -22,11 +22,11 @@ public class Tecnics {
     
     
 
-    public String getCodi_Tecnic() {
+    public int getCodi_Tecnic() {
         return Codi_Tecnic;
     }
 
-    public void setCodi_Tecnic(String Codi_Tecnic) {
+    public void setCodi_Tecnic(int Codi_Tecnic) {
         this.Codi_Tecnic = Codi_Tecnic;
     }
 

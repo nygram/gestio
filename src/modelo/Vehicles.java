@@ -6,17 +6,20 @@ public class Vehicles {
 
     private int Id;
     private String matricula;
+    private String marca;
     private String model;
     private String combustible;
+    private String renting;
     private Date data_entrada;
     private Date date_final;
     private boolean pany_seguretat;
     private boolean copia_claus;
+    private Date propera_revisio;
 
     public Vehicles() {
     }
 
-    public Vehicles(int Id, String matricula, String model, String combustible, Date data_entrada, Date date_final, boolean pany_seguretat, boolean copia_claus) {
+    public Vehicles(int Id, String matricula, String model, String combustible, Date data_entrada, Date date_final, boolean pany_seguretat, boolean copia_claus, Date propera_revisio) {
         this.Id = Id;
         this.matricula = matricula;
         this.model = model;
@@ -25,7 +28,10 @@ public class Vehicles {
         this.date_final = date_final;
         this.pany_seguretat = pany_seguretat;
         this.copia_claus = copia_claus;
+        this.propera_revisio = propera_revisio;
     }
+
+   
 
     public int getId() {
         return Id;
@@ -89,6 +95,29 @@ public class Vehicles {
 
     public void setCopia_claus(boolean copia_claus) {
         this.copia_claus = copia_claus;
+    }
+     public Date getPropera_revisio() {
+        return propera_revisio;
+    }
+
+    public void setPropera_revisio(Date propera_revisio) {
+        this.propera_revisio = propera_revisio;
+    }
+    
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+    
+    public String getRenting() {
+        return renting;
+    }
+
+    public void setRenting(String renting) {
+        this.renting = renting;
     }
 
 }

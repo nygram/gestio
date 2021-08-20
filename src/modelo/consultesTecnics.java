@@ -23,7 +23,7 @@ public class consultesTecnics extends Conexion {
 
         try {
             ps = conexio.prepareStatement("insert into Tecnics (Codi_Tecnic, Nom, Cognoms, NIF, Adreça, Poblacio, Codi_Postal, Tel_Particular, Tel_Empresa, Extensio) values (?,?,?,?,?,?,?,?,?,?)");
-            ps.setString(1, tecnics.getCodi_Tecnic());
+            ps.setInt(1, tecnics.getCodi_Tecnic());
             ps.setString(2, tecnics.getNom());
             ps.setString(3, tecnics.getCognoms());
             ps.setString(4, tecnics.getNIF());
@@ -65,7 +65,7 @@ public class consultesTecnics extends Conexion {
 
         try {
             ps = conexio.prepareStatement("update Tecnics set Codi_Tecnic=?, Nom=?, Cognoms=?, NIF=?, Adreça=?, Poblacio=?, Codi_Postal=?, Tel_Particular=?, Tel_Empresa=?, Extensio=? where Id=?");
-            ps.setString(1, tecnics.getCodi_Tecnic());
+            ps.setInt(1, tecnics.getCodi_Tecnic());
             ps.setString(2, tecnics.getNom());
             ps.setString(3, tecnics.getCognoms());
             ps.setString(4, tecnics.getNIF());
