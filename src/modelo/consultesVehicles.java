@@ -27,7 +27,7 @@ public class consultesVehicles extends Conexion{
         Connection conexio = getConnection();
 
         try {
-            ps = conexio.prepareStatement("insert into vehicles (matricula, marca, model, combustible, renting, date_entrada, data_final, pany_seguretat, copiaclaus, propera_revisio) values (?,?,?,?,?,?,?,?,?,?)");
+            ps = conexio.prepareStatement("insert into vehicles (matricula, marca, model, combustible, renting, data_entrada, data_final, pany_seguretat, copiaclaus, propera_revisio) values (?,?,?,?,?,?,?,?,?,?)");
             ps.setString(1, vehicles.getMatricula());
             ps.setString(2, vehicles.getMarca());
             ps.setString(3, vehicles.getModel());
