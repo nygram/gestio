@@ -119,5 +119,9 @@ public class Vehicles {
     public void setRenting(String renting) {
         this.renting = renting;
     }
+    
+    public String toString(){
+        return this.matricula;
+    }
 
 }

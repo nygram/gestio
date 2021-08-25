@@ -3,6 +3,7 @@ package tecnohome;
 import controlador.controladorTecnics;
 import controlador.controladorVehicles;
 import modelo.Tecnics;
+import modelo.VehicleDetalls;
 import modelo.Vehicles;
 import modelo.consultesTecnics;
 import modelo.consultesVehicles;
@@ -18,7 +19,8 @@ public class Tecnohome {
         Tecnics tecnic = new Tecnics();
         consultesTecnics modelo = new consultesTecnics();
         vistaEntrada entrada = new vistaEntrada();
-        controladorTecnics controlador = new controladorTecnics(tecnic, entrada, modelo);
+        VehicleDetalls detalls = new VehicleDetalls();
+        controladorTecnics controlador = new controladorTecnics(tecnic, entrada, modelo, detalls);
         
         controlador.iniciar();
         entrada.setVisible(true);

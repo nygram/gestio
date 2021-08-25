@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -20,6 +21,7 @@ import modelo.Conexion;
 import modelo.Vehicles;
 import modelo.consultesVehicles;
 import vista.vistaVehicle;
+import Utils.Fechas;
 
 
 public class controladorVehicles implements ActionListener, MouseListener, WindowListener, KeyListener {
@@ -28,6 +30,9 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
     //private vistaTecnic vista;
     private vistaVehicle vistavehicle;
     private consultesVehicles consvehicle;
+    java.util.Date date = new java.util.Date();
+    java.sql.Date sqlDate = new java.sql.Date(date.getTime()); 
+
 
     public controladorVehicles(Vehicles vehicle, vistaVehicle vistavehicle, consultesVehicles consvehicle) {
         this.vehicle = vehicle;
@@ -67,10 +72,11 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
                 vehicle.setMatricula((vistavehicle.txtMatricula.getText()));
                 vehicle.setMarca(vistavehicle.txtMarca.getText());
                 vehicle.setRenting(vistavehicle.txtRenting.getText());
-                vehicle.setData_entrada(Date.valueOf(vistavehicle.txtDataEntrada.getText()));
-                vehicle.setDate_final(Date.valueOf(vistavehicle.txtDataFinal.getText()));
+                vehicle.setData_entrada((Date) Fechas.dameFecha(vistavehicle.txtDataEntrada));
+                vehicle.setDate_final((Date)Fechas.dameFecha(vistavehicle.txtDataFinal));
+        
                 vehicle.setPany_seguretat(Boolean.getBoolean(vistavehicle.txtPany.getText()));
-                vehicle.setPropera_revisio(Date.valueOf(vistavehicle.txtPropRevisio.getText()));
+                vehicle.setPropera_revisio((Date) Fechas.dameFecha(vistavehicle.txtPropRevisio));
                 vehicle.setCopia_claus(Boolean.getBoolean(vistavehicle.txtCopiaClaus.getText()));
                 
                 if (consvehicle.insertar(vehicle)){
@@ -89,7 +95,7 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
 
     @Override
     public void mouseClicked(MouseEvent me) {
-        if (me.getSource() == vistavehicle.btnInsertar){
+        /*if (me.getSource() == vistavehicle.btnInsertar){
             System.out.println("hola");
             
             
@@ -114,7 +120,7 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
                     JOptionPane.showMessageDialog(null, "No insertado");
                 }
             
-        }
+        }*/
     }
 
     @Override

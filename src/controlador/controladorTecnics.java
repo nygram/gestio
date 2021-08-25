@@ -1,5 +1,6 @@
 package controlador;
 
+import Utils.Fechas;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -9,21 +10,20 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-//import java.sql.ResultSetMetaData;
-//import java.util.HashSet;
-//import java.util.LinkedList;
+import java.util.Calendar;
 import java.util.Vector;
 import javax.naming.InterruptedNamingException;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-//import javax.swing.plaf.basic.BasicTabbedPaneUI.MouseHandler;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import modelo.Conexion;
 import modelo.Tecnics;
+import modelo.VehicleDetalls;
 import modelo.Vehicles;
 import modelo.consultesTecnics;
 import modelo.consultesVehicles;
@@ -31,17 +31,21 @@ import vista.vistaEntrada;
 import vista.vistaVehicle;
 //import vista.vistaTecnic;
 
-public class controladorTecnics implements ActionListener, MouseListener, WindowListener, KeyListener {
+public class controladorTecnics implements ActionListener, MouseListener, WindowListener, KeyListener, ItemListener {
 
     private Tecnics tecnic;
+    private Vehicles vehicle;
+    private VehicleDetalls detalls;
     //private vistaTecnic vista;
     private vistaEntrada entrad;
     private consultesTecnics modelo;
     private vistaVehicle vehicles;
+    Calendar fecha = Calendar.getInstance();
 
-    public controladorTecnics(Tecnics tecnic, vistaEntrada entrad, consultesTecnics modelo) {
+    public controladorTecnics(Tecnics tecnic, vistaEntrada entrad, consultesTecnics modelo, VehicleDetalls detalls) {
         this.tecnic = tecnic;
         //this.vista = vista;
+        this.detalls = detalls;
         this.entrad = entrad;
         this.modelo = modelo;
         entrad.btnInsertar.addActionListener(this);
@@ -54,6 +58,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         entrad.btnNuevo.addActionListener(this);
         entrad.btnBorrar.addActionListener(this);
         entrad.btnVehicles.addActionListener(this);
+        entrad.cbVehicle.addActionListener(this);
 
     }
 
@@ -151,6 +156,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             entrad.btnInsertar.setVisible(true);
             entrad.btnNuevo.setVisible(false);
             limpiarCampos(entrad.jPanel2);
+            
 
         }
         if (ae.getSource() == entrad.btnInsertar) {
@@ -165,8 +171,12 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             tecnic.setPoblacio(entrad.txtPoblacio.getText());
             tecnic.setTel_Empresa(Integer.parseInt(entrad.txtTelefonEmpresa.getText()));
             tecnic.setTel_Particular(Integer.parseInt(entrad.txtTelefonParticular.getText()));
+            detalls.setData_trans((Date)Fechas.dameFecha(Fechas.getFechaActual()));
+            detalls.setIdTecnic(Integer.parseInt(entrad.txtId.getText()));
+            detalls.setIdVehicle(Integer.parseInt(entrad.txtIdVehicle.getText()));
+            
 
-            if (modelo.insertar(tecnic)) {
+            if (modelo.insertar(tecnic, detalls)) {
                 entrad.jTabbedPane1.setSelectedIndex(0);
                 JOptionPane.showMessageDialog(null, "Insertado correctamente");
                 entrad.btnNuevo.setVisible(true);
@@ -202,6 +212,10 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             controladorVehicles controlavehicles = new controladorVehicles(vehicle, vista, consultavehicle);
             vista.setVisible(true);
 
+        }
+        if (ae.getSource() == entrad.cbVehicle){
+            
+            entrad.txtIdVehicle.setText(Integer.toString(entrad.cbVehicle.getSelectedIndex()));
         }
 
     }
@@ -280,8 +294,8 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
 
     public void carregaTecnic(int codigo) {
 
-        PreparedStatement ps;
-        ResultSet rs;
+        PreparedStatement ps, ps2;
+        ResultSet rs, rs2;
         entrad.btnModificar.setVisible(true);
 
         try {
@@ -291,7 +305,9 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             Connection conexion = con.getConnection();
 
             ps = conexion.prepareStatement("Select Id, codi_tecnic, nom, cognoms, nif, adreça, tel_particular, tel_empresa, extensio, codi_postal, poblacio from tecnics where Id = ?");
+            ps2 = conexion.prepareStatement("Select d.id, v.matricula from vehicles v, detallsVehicle d");
             ps.setInt(1, ((codigo)));
+            //ps2.setInt(1, ((codigo)));
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -308,7 +324,13 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
                 entrad.txtId.setText(rs.getString("Id"));
 
             }
+            rs2= ps2.executeQuery();
+            while(rs2.next()){
+                //entrad.txtIdVehicle.setText(rs2.getString("id"));
+                entrad.cbVehicle.addItem(rs2.getString("matricula"));
+            }
             rs.close();
+            rs2.close();
             //habilitarCampos(entrad.jPanel2, false);
 
         } catch (Exception ex) {
@@ -346,6 +368,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             Connection conexion = con.getConnection();
 
             ps = conexion.prepareStatement("Select Id, codi_tecnic, nom, cognoms, nif, poblacio from tecnics order by id");
+            //ps2 = conexion.prepareStatement("Select ")
             rs = ps.executeQuery();
             modeloTabla.addColumn("Id");
             modeloTabla.addColumn("Codi");
@@ -391,5 +414,13 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             }
         }
 
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        if (e.getSource() == entrad.cbVehicle){
+            
+            
+        }
     }
 }
