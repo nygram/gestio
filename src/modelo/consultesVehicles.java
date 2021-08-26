@@ -8,6 +8,12 @@ package modelo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import vista.vistaVehicle;
 import modelo.Conexion;
 
@@ -62,5 +68,37 @@ public class consultesVehicles extends Conexion{
 
         }
     }
+    
+     public List<Vehicles> mostrarVehicle(){
+         
+        Vector<Vehicles> listVehicles = new Vector<Vehicles>();
+        Vehicles vehicle = new Vehicles();
+        
+        try{ 
+        Connection conexio = getConnection();
+        
+        ps = conexio.prepareStatement("select * from vehicles");
+        rs = ps.executeQuery();
+        
+        vehicle.setId(0);
+        vehicle.setMatricula("Selecciona un vehicle");
+        listVehicles.add(vehicle);
+        
+        while(rs.next()){
+            vehicle = new Vehicles();
+            vehicle.setId(rs.getInt("id"));
+            vehicle.setMatricula(rs.getString("matricula"));
+            vehicle.setMarca(rs.getString("marca"));
+            listVehicles.add(vehicle);
+        }
+        
+        
+        
 
+}       catch (Exception ex) {
+            System.out.println("Error "+ex);
+        }
+        return listVehicles;
+}
+     
 }

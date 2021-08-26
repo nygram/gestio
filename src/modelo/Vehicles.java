@@ -1,6 +1,8 @@
 package modelo;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Vehicles {
 
@@ -123,5 +125,11 @@ public class Vehicles {
     public String toString(){
         return this.matricula;
     }
-
+    
+   
+    
 }
+    
+    
+
+

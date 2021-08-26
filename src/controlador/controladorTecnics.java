@@ -13,9 +13,13 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.InterruptedNamingException;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -297,6 +301,9 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         PreparedStatement ps, ps2;
         ResultSet rs, rs2;
         entrad.btnModificar.setVisible(true);
+        consultesVehicles vehicle = new consultesVehicles();
+        DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel((Vector) vehicle.mostrarVehicle());
+        entrad.cbVehicle.setModel(modeloCombo);
 
         try {
 
@@ -305,7 +312,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             Connection conexion = con.getConnection();
 
             ps = conexion.prepareStatement("Select Id, codi_tecnic, nom, cognoms, nif, adreça, tel_particular, tel_empresa, extensio, codi_postal, poblacio from tecnics where Id = ?");
-            ps2 = conexion.prepareStatement("Select d.id, v.matricula from vehicles v, detallsVehicle d");
+           // ps2 = conexion.prepareStatement("Select d.id, v.matricula from vehicles v, detallsVehicle d");
             ps.setInt(1, ((codigo)));
             //ps2.setInt(1, ((codigo)));
             rs = ps.executeQuery();
@@ -324,13 +331,13 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
                 entrad.txtId.setText(rs.getString("Id"));
 
             }
-            rs2= ps2.executeQuery();
-            while(rs2.next()){
+           // rs2= ps2.executeQuery();
+           // while(rs2.next()){
                 //entrad.txtIdVehicle.setText(rs2.getString("id"));
-                entrad.cbVehicle.addItem(rs2.getString("matricula"));
-            }
+           //     entrad.cbVehicle.addItem(rs2.getString("matricula"));
+           // }
             rs.close();
-            rs2.close();
+            //rs2.close();
             //habilitarCampos(entrad.jPanel2, false);
 
         } catch (Exception ex) {
@@ -418,7 +425,27 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-        if (e.getSource() == entrad.cbVehicle){
+        if (e.getStateChange() == ItemEvent.SELECTED){
+            Vehicles vehicle = (Vehicles) entrad.cbVehicle.getSelectedItem();
+            
+            Conexion con = new Conexion();
+            Connection conexion = con.getConnection();
+            try {
+                PreparedStatement ps = conexion.prepareStatement("select id from Vehicles");
+                ResultSet rs;
+                rs = ps.executeQuery();
+                
+                entrad.txtIdVehicle.setText(rs.getString("id"));
+                
+                
+                
+            } catch (Exception ex) {
+                System.out.println("Error "+ex);
+            }
+            
+            
+            
+            
             
             
         }
