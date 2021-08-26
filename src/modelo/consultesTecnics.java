@@ -27,13 +27,19 @@ public class consultesTecnics extends Conexion {
         Connection conexio = getConnection();
 
         try {
+            
+            ps2 = conexio.prepareStatement("insert into detallsvehicle (data_trans, idTecnic, IdVehicle) values (?,?,?) ");
             ps = conexio.prepareStatement("insert into Tecnics (Codi_Tecnic, Nom, Cognoms, NIF, Adreça, Poblacio, Codi_Postal, Tel_Particular, Tel_Empresa, Extensio) values (?,?,?,?,?,?,?,?,?,?)");
-            ps2 = conexio.prepareStatement("insert into detallsvehicle data_trans, idTecnic, IdVechicle values (?,?,?) ");
-            ps2.setDate(1, ((Date)Fechas.dameFecha(fecha)));
-            ps2.setInt(2, tecnics.getId());
-            ps2.setInt(3, vehicle.getId());
-                        System.out.println("holiii");
-
+           
+            
+            ps2.setDate(1, vehicle.getData_trans());
+            System.out.println("lelo");
+            ps2.setInt(2, vehicle.getIdTecnic());
+            int tecnic = vehicle.getIdTecnic();
+            System.out.println("tecnic "+tecnic);
+            ps2.setInt(3, vehicle.getIdVehicle());
+            int vehiclenum = vehicle.getIdVehicle();
+            System.out.println("vehicle "+vehiclenum);
             ps.setInt(1, tecnics.getCodi_Tecnic());
             ps.setString(2, tecnics.getNom());
             ps.setString(3, tecnics.getCognoms());
@@ -44,9 +50,10 @@ public class consultesTecnics extends Conexion {
             ps.setInt(8, tecnics.getTel_Particular());
             ps.setInt(9, tecnics.getTel_Particular());
             ps.setInt(10, tecnics.getExtensio());
-
+            
+            
             int result = ps.executeUpdate();
-            int result2 = ps.executeUpdate();
+            int result2 = ps2.executeUpdate();
 
             if (result > 0 && result2 > 0) {
                 return true;

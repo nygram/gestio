@@ -175,7 +175,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             tecnic.setPoblacio(entrad.txtPoblacio.getText());
             tecnic.setTel_Empresa(Integer.parseInt(entrad.txtTelefonEmpresa.getText()));
             tecnic.setTel_Particular(Integer.parseInt(entrad.txtTelefonParticular.getText()));
-            detalls.setData_trans((Date)Fechas.dameFecha(Fechas.getFechaActual()));
+            detalls.setData_trans((Fechas.getFechaActual()));
             detalls.setIdTecnic(Integer.parseInt(entrad.txtId.getText()));
             detalls.setIdVehicle(Integer.parseInt(entrad.txtIdVehicle.getText()));
             
