@@ -125,7 +125,7 @@ public class vistaVehicle extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel10.setText("Detalls Vehicle");
 
-        txtDataFinal.setDateFormatString("yyyy-MMM-dd");
+        txtDataFinal.setDateFormatString("dd/MMM/yyyy");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -221,6 +221,7 @@ public class vistaVehicle extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Detalls Vehicle", jPanel2);
 
+        btnInsertar.setBackground(new java.awt.Color(229, 172, 19));
         btnInsertar.setText("Insertar");
         btnInsertar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

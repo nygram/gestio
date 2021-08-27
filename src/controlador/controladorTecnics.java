@@ -1,5 +1,6 @@
 package controlador;
 
+import Utils.Campos;
 import Utils.Fechas;
 import java.awt.Color;
 import java.awt.Component;
@@ -10,20 +11,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.InterruptedNamingException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import modelo.Conexion;
 import modelo.Tecnics;
@@ -40,7 +35,6 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
     private Tecnics tecnic;
     private Vehicles vehicle;
     private VehicleDetalls detalls;
-    //private vistaTecnic vista;
     private vistaEntrada entrad;
     private consultesTecnics modelo;
     private vistaVehicle vehicles;
@@ -48,7 +42,6 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
 
     public controladorTecnics(Tecnics tecnic, vistaEntrada entrad, consultesTecnics modelo, VehicleDetalls detalls) {
         this.tecnic = tecnic;
-        //this.vista = vista;
         this.detalls = detalls;
         this.entrad = entrad;
         this.modelo = modelo;
@@ -67,7 +60,6 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
     }
 
     public void iniciar() {
-        // entrad.setTitle("Tecnohome");
         entrad.setLocationRelativeTo(null);
 
     }
@@ -138,7 +130,6 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
                 tecnic.setTel_Particular(Integer.parseInt(entrad.txtTelefonParticular.getText()));
                 tecnic.setId(Integer.parseInt(entrad.txtId.getText()));
 
-                //modelo.creaTecnic();
                 if (modelo.modificar(tecnic)) {
                     entrad.jTabbedPane1.setSelectedIndex(0);
                     JOptionPane.showMessageDialog(null, "Modificado correctamente");
@@ -159,8 +150,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             entrad.jTabbedPane1.setSelectedIndex(1);
             entrad.btnInsertar.setVisible(true);
             entrad.btnNuevo.setVisible(false);
-            limpiarCampos(entrad.jPanel2);
-            
+            Campos.limpiarCampos(entrad.jPanel2);
 
         }
         if (ae.getSource() == entrad.btnInsertar) {
@@ -178,7 +168,6 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             detalls.setData_trans((Fechas.getFechaActual()));
             detalls.setIdTecnic(Integer.parseInt(entrad.txtId.getText()));
             detalls.setIdVehicle(Integer.parseInt(entrad.txtIdVehicle.getText()));
-            
 
             if (modelo.insertar(tecnic, detalls)) {
                 entrad.jTabbedPane1.setSelectedIndex(0);
@@ -217,8 +206,8 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             vista.setVisible(true);
 
         }
-        if (ae.getSource() == entrad.cbVehicle){
-            
+        if (ae.getSource() == entrad.cbVehicle) {
+
             entrad.txtIdVehicle.setText(Integer.toString(entrad.cbVehicle.getSelectedIndex()));
         }
 
@@ -312,10 +301,11 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             Connection conexion = con.getConnection();
 
             ps = conexion.prepareStatement("Select Id, codi_tecnic, nom, cognoms, nif, adreça, tel_particular, tel_empresa, extensio, codi_postal, poblacio from tecnics where Id = ?");
-           // ps2 = conexion.prepareStatement("Select d.id, v.matricula from vehicles v, detallsVehicle d");
+            //ps2 = conexion.prepareStatement("Select d.id, v.matricula from vehicles v, detallsVehicle d where d.idtecnic=? AND v.id = d.idvehicle");
             ps.setInt(1, ((codigo)));
             //ps2.setInt(1, ((codigo)));
             rs = ps.executeQuery();
+            //rs2 = ps2.executeQuery();
 
             while (rs.next()) {
                 entrad.txtNif.setText(rs.getString("Nif"));
@@ -331,10 +321,10 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
                 entrad.txtId.setText(rs.getString("Id"));
 
             }
-           // rs2= ps2.executeQuery();
-           // while(rs2.next()){
-                //entrad.txtIdVehicle.setText(rs2.getString("id"));
-           //     entrad.cbVehicle.addItem(rs2.getString("matricula"));
+
+           //while (rs2.next()) {
+           //     entrad.txtIdVehicle.setText(rs2.getString("id"));
+           //     entrad.cbVehicle.addItem("matricula");
            // }
             rs.close();
             //rs2.close();
@@ -375,7 +365,6 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             Connection conexion = con.getConnection();
 
             ps = conexion.prepareStatement("Select Id, codi_tecnic, nom, cognoms, nif, poblacio from tecnics order by id");
-            //ps2 = conexion.prepareStatement("Select ")
             rs = ps.executeQuery();
             modeloTabla.addColumn("Id");
             modeloTabla.addColumn("Codi");
@@ -401,53 +390,23 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         }
     }
 
-    public void habilitarCampos(Container container, boolean b) {
-        Component[] components = container.getComponents();
-        for (Component component : components) {
-            if (component instanceof JTextField) {
-                JTextField txtField = ((JTextField) component);
-                txtField.setEditable(b);
-            }
-        }
-
-    }
-
-    public void limpiarCampos(Container container) {
-        Component[] components = container.getComponents();
-        for (Component component : components) {
-            if (component instanceof JTextField) {
-                JTextField txtField = ((JTextField) component);
-                txtField.setText(null);
-            }
-        }
-
-    }
-
     @Override
     public void itemStateChanged(ItemEvent e) {
-        if (e.getStateChange() == ItemEvent.SELECTED){
+        if (e.getStateChange() == ItemEvent.SELECTED) {
             Vehicles vehicle = (Vehicles) entrad.cbVehicle.getSelectedItem();
-            
+
             Conexion con = new Conexion();
             Connection conexion = con.getConnection();
             try {
                 PreparedStatement ps = conexion.prepareStatement("select id from Vehicles");
                 ResultSet rs;
                 rs = ps.executeQuery();
-                
+
                 entrad.txtIdVehicle.setText(rs.getString("id"));
-                
-                
-                
+
             } catch (Exception ex) {
-                System.out.println("Error "+ex);
+                System.out.println("Error " + ex);
             }
-            
-            
-            
-            
-            
-            
         }
     }
 }

@@ -44,19 +44,10 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
         vistavehicle.taulaVehicles.addKeyListener(this);
         vistavehicle.jTabbedPane1.addMouseListener(this);
         vistavehicle.btnInsertar.addMouseListener(this);
-        //vistavehicle.addWindowListener(this);
         
-        /*  
-        
-        vistavehicle.btnSalir.addActionListener(this);
-        vistavehicle.btnModificar.addActionListener(this);
-        vistavehicle.btnNuevo.addActionListener(this);
-        vistavehicle.btnBorrar.addActionListener(this);
-         */
     }
 
     public void iniciar() {
-        //vistavehicle.setTitle("Tecnohome");
         vistavehicle.setLocationRelativeTo(null);
         System.out.println("hola");
 
@@ -72,12 +63,13 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
                 vehicle.setMatricula((vistavehicle.txtMatricula.getText()));
                 vehicle.setMarca(vistavehicle.txtMarca.getText());
                 vehicle.setRenting(vistavehicle.txtRenting.getText());
-                vehicle.setData_entrada((Date) Fechas.dameFecha(vistavehicle.txtDataEntrada));
-                vehicle.setDate_final((Date)Fechas.dameFecha(vistavehicle.txtDataFinal));
+                vehicle.setData_entrada(Fechas.dameFecha(vistavehicle.txtDataEntrada));
+                vehicle.setDate_final(Fechas.dameFecha(vistavehicle.txtDataFinal));
         
                 vehicle.setPany_seguretat(Boolean.getBoolean(vistavehicle.txtPany.getText()));
-                vehicle.setPropera_revisio((Date) Fechas.dameFecha(vistavehicle.txtPropRevisio));
+                vehicle.setPropera_revisio(Fechas.dameFecha(vistavehicle.txtPropRevisio));
                 vehicle.setCopia_claus(Boolean.getBoolean(vistavehicle.txtCopiaClaus.getText()));
+                
                 
                 if (consvehicle.insertar(vehicle)){
                     vistavehicle.jTabbedPane1.setSelectedIndex(0);
@@ -95,32 +87,7 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
 
     @Override
     public void mouseClicked(MouseEvent me) {
-        /*if (me.getSource() == vistavehicle.btnInsertar){
-            System.out.println("hola");
-            
-            
-                vehicle.setModel(vistavehicle.txtModel.getText());
-                vehicle.setMatricula((vistavehicle.txtMatricula.getText()));
-                vehicle.setMarca(vistavehicle.txtMarca.getText());
-                vehicle.setRenting(vistavehicle.txtRenting.getText());
-                vehicle.setData_entrada(Date.valueOf(vistavehicle.txtDataEntrada.getText()));
-                vehicle.setDate_final(Date.valueOf(vistavehicle.txtDataFinal.getText()));
-                vehicle.setPany_seguretat(Boolean.getBoolean(vistavehicle.txtPany.getText()));
-                vehicle.setPropera_revisio(Date.valueOf(vistavehicle.txtPropRevisio.getText()));
-                vehicle.setCopia_claus(Boolean.getBoolean(vistavehicle.txtCopiaClaus.getText()));
-                
-                if (consvehicle.insertar(vehicle)){
-                    vistavehicle.jTabbedPane1.setSelectedIndex(0);
-                    JOptionPane.showMessageDialog(null, "Insertado correctamente");
-                    //vistavehicle.btnNuevo.setVisible(true);
-                    carregaTaula();
-                    
-                    
-                }else {
-                    JOptionPane.showMessageDialog(null, "No insertado");
-                }
-            
-        }*/
+        
     }
 
     @Override

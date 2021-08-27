@@ -372,7 +372,7 @@
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="txtDataFinal">
               <Properties>
-                <Property name="dateFormatString" type="java.lang.String" value="yyyy-MMM-dd"/>
+                <Property name="dateFormatString" type="java.lang.String" value="dd/MMM/yyyy"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -394,6 +394,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnInsertar">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="13" green="ac" red="e5" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Insertar"/>
       </Properties>
       <Events>

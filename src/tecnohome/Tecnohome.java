@@ -15,7 +15,6 @@ public class Tecnohome {
 
     public static void main(String[] args) {
         
-        //vistaTecnic vista = new vistaTecnic();
         Tecnics tecnic = new Tecnics();
         consultesTecnics modelo = new consultesTecnics();
         vistaEntrada entrada = new vistaEntrada();

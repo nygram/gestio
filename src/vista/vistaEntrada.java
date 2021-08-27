@@ -51,6 +51,7 @@ public class vistaEntrada extends javax.swing.JFrame {
         txtPoblacio = new javax.swing.JTextField();
         cbVehicle = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        txtVehicle = new javax.swing.JTextField();
         btnInsertar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         txtId = new javax.swing.JTextField();
@@ -182,6 +183,8 @@ public class vistaEntrada extends javax.swing.JFrame {
 
         jLabel1.setText("Vehicle");
 
+        txtVehicle.setText("jTextField1");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -239,7 +242,9 @@ public class vistaEntrada extends javax.swing.JFrame {
                         .addGap(79, 79, 79)
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(cbVehicle, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbVehicle, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(162, 162, 162)
+                        .addComponent(txtVehicle, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(126, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -280,7 +285,8 @@ public class vistaEntrada extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbVehicle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(txtVehicle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(69, Short.MAX_VALUE))
         );
 
@@ -481,5 +487,6 @@ public class vistaEntrada extends javax.swing.JFrame {
     public javax.swing.JTextField txtPoblacio;
     public javax.swing.JTextField txtTelefonEmpresa;
     public javax.swing.JTextField txtTelefonParticular;
+    public javax.swing.JTextField txtVehicle;
     // End of variables declaration//GEN-END:variables
 }
