@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -37,6 +38,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
     private VehicleDetalls detalls;
     private vistaEntrada entrad;
     private consultesTecnics modelo;
+    private consultesVehicles consultes;
     private vistaVehicle vehicles;
     Calendar fecha = Calendar.getInstance();
 
@@ -151,6 +153,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             entrad.btnInsertar.setVisible(true);
             entrad.btnNuevo.setVisible(false);
             Campos.limpiarCampos(entrad.jPanel2);
+            consultes.mostrarVehicle();
 
         }
         if (ae.getSource() == entrad.btnInsertar) {
@@ -293,6 +296,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         consultesVehicles vehicle = new consultesVehicles();
         DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel((Vector) vehicle.mostrarVehicle());
         entrad.cbVehicle.setModel(modeloCombo);
+        
 
         try {
 
@@ -300,7 +304,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
 
             Connection conexion = con.getConnection();
 
-            ps = conexion.prepareStatement("Select Id, codi_tecnic, nom, cognoms, nif, adreça, tel_particular, tel_empresa, extensio, codi_postal, poblacio from tecnics where Id = ?");
+            ps = conexion.prepareStatement("Select t.Id, t.codi_tecnic, t.nom, t.cognoms, t.nif, t.adreça, t.tel_particular, t.tel_empresa, t.extensio, t.codi_postal, t.poblacio, v.matricula from tecnics t, vehicles v, detallsvehicle d where t.Id = ? AND t.id = d.idtecnic AND v.id=d.idvehicle");
             //ps2 = conexion.prepareStatement("Select d.id, v.matricula from vehicles v, detallsVehicle d where d.idtecnic=? AND v.id = d.idvehicle");
             ps.setInt(1, ((codigo)));
             //ps2.setInt(1, ((codigo)));
@@ -319,6 +323,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
                 entrad.txtTelefonEmpresa.setText(rs.getString("tel_empresa"));
                 entrad.txtExtensio.setText(rs.getString("extensio"));
                 entrad.txtId.setText(rs.getString("Id"));
+                entrad.txtVehicle.setText(rs.getString("matricula"));
 
             }
 

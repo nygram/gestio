@@ -79,7 +79,7 @@ public class consultesVehicles extends Conexion{
         
         ps = conexio.prepareStatement("select * from vehicles");
         rs = ps.executeQuery();
-        
+       
         vehicle.setId(0);
         vehicle.setMatricula("Selecciona un vehicle");
         listVehicles.add(vehicle);

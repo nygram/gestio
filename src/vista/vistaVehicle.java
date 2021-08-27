@@ -125,7 +125,7 @@ public class vistaVehicle extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel10.setText("Detalls Vehicle");
 
-        txtDataFinal.setDateFormatString("dd/MMM/yyyy");
+        txtDataFinal.setDateFormatString("dd/mm/YY");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
