@@ -1,14 +1,14 @@
 package tecnohome;
 
-import controlador.ControladorTecnics;
-import controlador.ControladorVehicles;
+import controlador.controladorTecnics;
+import controlador.controladorVehicles;
 import modelo.Tecnics;
 import modelo.VehicleDetalls;
 import modelo.Vehicles;
-import modelo.ConsultesTecnics;
-import modelo.ConsultesVehicles;
-import vista.VistaTecnic;
-import vista.VistaVehicle;
+import modelo.consultesTecnics;
+import modelo.consultesVehicles;
+import vista.vistaTecnic;
+import vista.vistaVehicle;
 
 
 public class Tecnohome {
@@ -16,10 +16,10 @@ public class Tecnohome {
     public static void main(String[] args) {
         
         Tecnics tecnic = new Tecnics();
-        ConsultesTecnics modelo = new ConsultesTecnics();
-        VistaTecnic entrada = new VistaTecnic();
+        consultesTecnics modelo = new consultesTecnics();
+        vistaTecnic entrada = new vistaTecnic();
         VehicleDetalls detalls = new VehicleDetalls();
-        ControladorTecnics controlador = new ControladorTecnics(tecnic, entrada, modelo, detalls);
+        controladorTecnics controlador = new controladorTecnics(tecnic, entrada, modelo, detalls);
         
         controlador.iniciar();
         entrada.setVisible(true);
