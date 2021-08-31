@@ -47,6 +47,9 @@ public class vistaVehicle extends javax.swing.JFrame {
         txtPropRevisio = new com.toedter.calendar.JDateChooser();
         txtId = new javax.swing.JTextField();
         btnInsertar = new javax.swing.JButton();
+        btnBorrar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -125,7 +128,17 @@ public class vistaVehicle extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel10.setText("Detalls Vehicle");
 
-        txtDataFinal.setDateFormatString("dd/mm/YY");
+        txtDataEntrada.setDate(Utils.Fechas.getFechaActual());
+        txtDataEntrada.setDateFormatString("dd/MM/YY");
+        txtDataEntrada.setMinSelectableDate(new java.util.Date(1609459293000L));
+
+        txtDataFinal.setDate(Utils.Fechas.getFechaActual());
+        txtDataFinal.setDateFormatString("dd/MM/YY");
+        txtDataFinal.setMinSelectableDate(new java.util.Date(1577836893000L));
+
+        txtPropRevisio.setDate(Utils.Fechas.getFechaActual());
+        txtPropRevisio.setDateFormatString("dd/MM/YY");
+        txtPropRevisio.setMinSelectableDate(new java.util.Date(1577836893000L));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -144,39 +157,30 @@ public class vistaVehicle extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtModel)
+                    .addComponent(txtMarca)
+                    .addComponent(txtMatricula, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                    .addComponent(txtDataFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtPropRevisio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(43, 43, 43)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtModel)
-                                .addComponent(txtMarca)
-                                .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(43, 43, 43)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Combustible, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel8))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(184, 184, 184)
-                                .addComponent(txtRenting))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtDataEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCombustible, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPany, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCopiaClaus, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(txtPropRevisio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(Combustible, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel8))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtDataEntrada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtRenting, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtCombustible, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE))
+                .addGap(87, 87, 87)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtPany, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCopiaClaus, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -229,6 +233,12 @@ public class vistaVehicle extends javax.swing.JFrame {
             }
         });
 
+        btnBorrar.setText("Borrar");
+
+        btnModificar.setText("Modificar");
+
+        btnNuevo.setText("Nuevo");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -239,13 +249,19 @@ public class vistaVehicle extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(21, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(29, 29, 29))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnNuevo)
+                                .addGap(76, 76, 76)
+                                .addComponent(btnModificar)
+                                .addGap(55, 55, 55)
+                                .addComponent(btnBorrar)
+                                .addGap(38, 38, 38)
                                 .addComponent(btnInsertar)
                                 .addGap(146, 146, 146))))))
         );
@@ -253,7 +269,11 @@ public class vistaVehicle extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addComponent(btnInsertar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnInsertar)
+                    .addComponent(btnBorrar)
+                    .addComponent(btnModificar)
+                    .addComponent(btnNuevo))
                 .addGap(14, 14, 14)
                 .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
@@ -270,7 +290,10 @@ public class vistaVehicle extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Combustible;
+    public javax.swing.JButton btnBorrar;
     public javax.swing.JButton btnInsertar;
+    public javax.swing.JButton btnModificar;
+    public javax.swing.JButton btnNuevo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -281,8 +304,8 @@ public class vistaVehicle extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    public javax.swing.JPanel jPanel1;
+    public javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTabbedPane jTabbedPane1;
     public javax.swing.JTable taulaVehicles;

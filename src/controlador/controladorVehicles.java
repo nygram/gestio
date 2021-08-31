@@ -1,5 +1,6 @@
 package controlador;
 
+import Utils.Campos;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +24,6 @@ import modelo.consultesVehicles;
 import vista.vistaVehicle;
 import Utils.Fechas;
 
-
 public class controladorVehicles implements ActionListener, MouseListener, WindowListener, KeyListener {
 
     private Vehicles vehicle;
@@ -31,8 +31,7 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
     private vistaVehicle vistavehicle;
     private consultesVehicles consvehicle;
     java.util.Date date = new java.util.Date();
-    java.sql.Date sqlDate = new java.sql.Date(date.getTime()); 
-
+    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 
     public controladorVehicles(Vehicles vehicle, vistaVehicle vistavehicle, consultesVehicles consvehicle) {
         this.vehicle = vehicle;
@@ -44,50 +43,132 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
         vistavehicle.taulaVehicles.addKeyListener(this);
         vistavehicle.jTabbedPane1.addMouseListener(this);
         vistavehicle.btnInsertar.addMouseListener(this);
-        
+        vistavehicle.btnBorrar.addActionListener(this);
+        vistavehicle.btnModificar.addActionListener(this);
+        vistavehicle.btnNuevo.addActionListener(this);
+        vistavehicle.addWindowListener(this);
+
     }
 
     public void iniciar() {
         vistavehicle.setLocationRelativeTo(null);
         System.out.println("hola");
+        consvehicle.carregaTaula(vistavehicle);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        if (e.getSource() == vistavehicle.btnInsertar){
-            
-            
+
+        if (e.getSource() == vistavehicle.btnInsertar) {
+
+            vehicle.setModel(vistavehicle.txtModel.getText());
+            vehicle.setMatricula((vistavehicle.txtMatricula.getText()));
+            vehicle.setMarca(vistavehicle.txtMarca.getText());
+            vehicle.setRenting(vistavehicle.txtRenting.getText());
+            vehicle.setData_entrada(Fechas.dameFecha(vistavehicle.txtDataEntrada));
+            vehicle.setDate_final(Fechas.dameFecha(vistavehicle.txtDataFinal));
+            vehicle.setCombustible(vistavehicle.txtCombustible.getText());
+            vehicle.setPany_seguretat(Boolean.getBoolean(vistavehicle.txtPany.getText()));
+            vehicle.setPropera_revisio(Fechas.dameFecha(vistavehicle.txtPropRevisio));
+            vehicle.setCopia_claus(Boolean.getBoolean(vistavehicle.txtCopiaClaus.getText()));
+
+            if (consvehicle.insertar(vehicle)) {
+                vistavehicle.jTabbedPane1.setSelectedIndex(0);
+                JOptionPane.showMessageDialog(null, "Insertado correctamente");
+                //vistavehicle.btnNuevo.setVisible(true);
+                consvehicle.carregaTaula(vistavehicle);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No insertado");
+            }
+
+        }
+        if (e.getSource() == vistavehicle.btnBorrar) {
+
+            vehicle.setId(Integer.parseInt(vistavehicle.txtId.getText()));
+
+            if (consvehicle.borrar(vehicle)) {
+                vistavehicle.jTabbedPane1.setSelectedIndex(0);
+                JOptionPane.showMessageDialog(null, "Borrado correctamente");
+                consvehicle.carregaTaula(vistavehicle);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No borrado");
+            }
+
+        }
+        if (e.getSource() == vistavehicle.btnModificar) {
+
+            if (vistavehicle.jTabbedPane1.getSelectedIndex() == 1) {
+
                 vehicle.setModel(vistavehicle.txtModel.getText());
                 vehicle.setMatricula((vistavehicle.txtMatricula.getText()));
                 vehicle.setMarca(vistavehicle.txtMarca.getText());
                 vehicle.setRenting(vistavehicle.txtRenting.getText());
                 vehicle.setData_entrada(Fechas.dameFecha(vistavehicle.txtDataEntrada));
                 vehicle.setDate_final(Fechas.dameFecha(vistavehicle.txtDataFinal));
-        
+                vehicle.setCombustible(vistavehicle.txtCombustible.getText());
                 vehicle.setPany_seguretat(Boolean.getBoolean(vistavehicle.txtPany.getText()));
                 vehicle.setPropera_revisio(Fechas.dameFecha(vistavehicle.txtPropRevisio));
                 vehicle.setCopia_claus(Boolean.getBoolean(vistavehicle.txtCopiaClaus.getText()));
-                
-                
-                if (consvehicle.insertar(vehicle)){
-                    vistavehicle.jTabbedPane1.setSelectedIndex(0);
-                    JOptionPane.showMessageDialog(null, "Insertado correctamente");
-                    //vistavehicle.btnNuevo.setVisible(true);
-                    carregaTaula();
-                    
-                    
-                }else {
-                    JOptionPane.showMessageDialog(null, "No insertado");
-                }
-            
+                vehicle.setId(Integer.parseInt(vistavehicle.txtId.getText()));
+
+                if (consvehicle.modificar(vehicle)) {
+                vistavehicle.jTabbedPane1.setSelectedIndex(0);
+                JOptionPane.showMessageDialog(null, "Modificat correctament");
+                //vistavehicle.btnNuevo.setVisible(true);
+                consvehicle.carregaTaula(vistavehicle);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No modificat");
+            }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleccion técnic a modificar");
+            }
+
         }
+        if (e.getSource() == vistavehicle.btnNuevo) {
+
+            vistavehicle.jTabbedPane1.setSelectedIndex(1);
+            //vistavehicle.btnInsertar.setVisible(true);
+            //vistavehicle.btnNuevo.setVisible(false);
+            Campos.limpiarCampos(vistavehicle.jPanel2);
+           // consvehicle.mostrarVehicle();
+            vistavehicle.txtDataEntrada.setDate(Utils.Fechas.getFechaActual());
+            vistavehicle.txtDataFinal.setDate(Utils.Fechas.getFechaActual());
+            vistavehicle.txtPropRevisio.setDate(Utils.Fechas.getFechaActual());
+
+        }
+
     }
 
     @Override
     public void mouseClicked(MouseEvent me) {
-        
+        if (me.getSource() == vistavehicle.taulaVehicles) {
+            int fila = vistavehicle.taulaVehicles.getSelectedRow();
+            String codigo = vistavehicle.taulaVehicles.getValueAt(fila, 0).toString();
+            vistavehicle.txtId.setText(codigo);
+            if (me.getClickCount() == 2) {
+                vistavehicle.jTabbedPane1.setSelectedIndex(1);
+                consvehicle.carregaVehicle(Integer.parseInt(codigo), vistavehicle);
+                
+                
+
+            }
+
+        }
+        if (me.getSource() == vistavehicle.jTabbedPane1) {
+            if (vistavehicle.jTabbedPane1.getSelectedIndex() == 1) {
+                String codi = vistavehicle.txtId.getText();
+                consvehicle.carregaVehicle(Integer.parseInt(codi), vistavehicle);
+            }
+            // if (vistavehicle.jTabbedPane1.getSelectedIndex() == 0) {
+            //     vistavehicle.btnModificar.setVisible(false);
+            // }
+        }
+
     }
 
     @Override
@@ -108,6 +189,7 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
 
     @Override
     public void windowOpened(WindowEvent e) {
+
     }
 
     @Override
@@ -128,6 +210,8 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
 
     @Override
     public void windowActivated(WindowEvent e) {
+        consvehicle.carregaTaula(vistavehicle);
+
     }
 
     @Override
@@ -145,56 +229,6 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
 
     @Override
     public void keyReleased(KeyEvent e) {
-    }
-    
-    public void carregaTaula() {
-        DefaultTableModel modeloTabla = new DefaultTableModel() {
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return false;
-            }
-
-        };
-        vistavehicle.taulaVehicles.setModel(modeloTabla);
-        vistavehicle.taulaVehicles.setRowSorter(new TableRowSorter<DefaultTableModel>(modeloTabla));
-        vistavehicle.taulaVehicles.setAutoCreateRowSorter(true);
-        vistavehicle.taulaVehicles.setBackground(Color.white);
-        vistavehicle.taulaVehicles.setSelectionBackground(new Color(250, 201, 104));
-
-        vistavehicle.txtId.setText(null);
-        //taulaVehicles.setEnabled(false);
-        //vistavehicle.btnModificar.setVisible(false);
-        vistavehicle.jTabbedPane1.setSelectedIndex(0);
-
-        PreparedStatement ps;
-        ResultSet rs;
-
-        try {
-
-            Conexion con = new Conexion();
-
-            Connection conexion = con.getConnection();
-
-            ps = conexion.prepareStatement("Select Id, matricula, model from vehicles order by id");
-            rs = ps.executeQuery();
-            modeloTabla.addColumn("Id");
-            modeloTabla.addColumn("Matricula");
-            modeloTabla.addColumn("model");
-
-            while (rs.next()) {
-                Object fila[] = new Object[3];
-                for (int i = 0; i < 3; i++) {
-                    fila[i] = rs.getObject(i+1);
-
-                }
-                modeloTabla.addRow(fila);
-            }
-            rs.close();
-            vistavehicle.txtId.setText("1");
-
-        } catch (Exception e) {
-            System.err.println("Error " + e);
-
-        }
     }
 
 }

@@ -5,7 +5,7 @@ public class Tecnics {
     
     
     
-    int Codi_Tecnic ;
+    private int Codi_Tecnic ;
     int Id;
     String Nom;
     String Cognoms;

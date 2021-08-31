@@ -22,27 +22,28 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import modelo.Conexion;
+import modelo.ConsultesTecnicVehicle;
 import modelo.Tecnics;
 import modelo.VehicleDetalls;
 import modelo.Vehicles;
 import modelo.consultesTecnics;
 import modelo.consultesVehicles;
-import vista.vistaEntrada;
+import vista.VistaTecnicVehicle;
+import vista.vistaTecnic;
 import vista.vistaVehicle;
 //import vista.vistaTecnic;
-
 public class controladorTecnics implements ActionListener, MouseListener, WindowListener, KeyListener, ItemListener {
 
     private Tecnics tecnic;
     private Vehicles vehicle;
     private VehicleDetalls detalls;
-    private vistaEntrada entrad;
+    private vistaTecnic entrad;
     private consultesTecnics modelo;
     private consultesVehicles consultes;
     private vistaVehicle vehicles;
     Calendar fecha = Calendar.getInstance();
 
-    public controladorTecnics(Tecnics tecnic, vistaEntrada entrad, consultesTecnics modelo, VehicleDetalls detalls) {
+    public controladorTecnics(Tecnics tecnic, vistaTecnic entrad, consultesTecnics modelo, VehicleDetalls detalls) {
         this.tecnic = tecnic;
         this.detalls = detalls;
         this.entrad = entrad;
@@ -57,7 +58,8 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         entrad.btnNuevo.addActionListener(this);
         entrad.btnBorrar.addActionListener(this);
         entrad.btnVehicles.addActionListener(this);
-        entrad.cbVehicle.addActionListener(this);
+        entrad.btnDetalls.addActionListener(this);
+        
 
     }
 
@@ -74,7 +76,8 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             entrad.txtId.setText(codigo);
             if (me.getClickCount() == 2) {
                 entrad.jTabbedPane1.setSelectedIndex(1);
-                carregaTecnic(Integer.parseInt(codigo));
+                modelo.carregaTecnic(Integer.parseInt(codigo), entrad);
+                modelo.carregaVehicle(Integer.parseInt(codigo), entrad);
 
             }
 
@@ -82,7 +85,8 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         if (me.getSource() == entrad.jTabbedPane1) {
             if (entrad.jTabbedPane1.getSelectedIndex() == 1) {
                 String codi = entrad.txtId.getText();
-                carregaTecnic(Integer.parseInt(codi));
+                modelo.carregaTecnic(Integer.parseInt(codi), entrad);
+                modelo.carregaVehicle(Integer.parseInt(codi), entrad);
             }
             if (entrad.jTabbedPane1.getSelectedIndex() == 0) {
                 entrad.btnModificar.setVisible(false);
@@ -135,7 +139,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
                 if (modelo.modificar(tecnic)) {
                     entrad.jTabbedPane1.setSelectedIndex(0);
                     JOptionPane.showMessageDialog(null, "Modificado correctamente");
-                    carregaTaula();
+                    modelo.carregaTaula(entrad);
 
                 } else {
                     JOptionPane.showMessageDialog(null, "No modificado");
@@ -176,7 +180,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
                 entrad.jTabbedPane1.setSelectedIndex(0);
                 JOptionPane.showMessageDialog(null, "Insertado correctamente");
                 entrad.btnNuevo.setVisible(true);
-                carregaTaula();
+                modelo.carregaTaula(entrad);
 
             } else {
                 JOptionPane.showMessageDialog(null, "No insertado");
@@ -193,7 +197,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             if (modelo.borrar(tecnic)) {
                 entrad.jTabbedPane1.setSelectedIndex(0);
                 JOptionPane.showMessageDialog(null, "Borrado correctamente");
-                carregaTaula();
+                modelo.carregaTaula(entrad);
 
             } else {
                 JOptionPane.showMessageDialog(null, "No borrado");
@@ -209,9 +213,17 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             vista.setVisible(true);
 
         }
-        if (ae.getSource() == entrad.cbVehicle) {
+        
+        if (ae.getSource() == entrad.btnDetalls) {
 
-            entrad.txtIdVehicle.setText(Integer.toString(entrad.cbVehicle.getSelectedIndex()));
+            ConsultesTecnicVehicle consulta = new ConsultesTecnicVehicle();
+            Vehicles vehicle = new Vehicles();
+            Tecnics tecnic = new Tecnics();
+            VistaTecnicVehicle vista = new VistaTecnicVehicle();
+            VehicleDetalls detalls = new VehicleDetalls();
+            ControladorTecnicVehicle controlador = new ControladorTecnicVehicle(tecnic, vista, consulta, detalls, vehicle);
+            vista.setVisible(true);
+
         }
 
     }
@@ -245,7 +257,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
     public void windowActivated(WindowEvent we) {
         entrad.btnModificar.setVisible(false);
         entrad.btnInsertar.setVisible(false);
-        carregaTaula();
+        modelo.carregaTaula(entrad);
 
     }
 
@@ -266,7 +278,8 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         entrad.txtId.setText(codigo);
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             entrad.jTabbedPane1.setSelectedIndex(1);
-            carregaTecnic(Integer.parseInt(codigo));
+            modelo.carregaTecnic(Integer.parseInt(codigo), entrad);
+            modelo.carregaVehicle(Integer.parseInt(codigo), entrad);
 
         }
     }
@@ -288,117 +301,9 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
 
     }
 
-    public void carregaTecnic(int codigo) {
-
-        PreparedStatement ps, ps2;
-        ResultSet rs, rs2;
-        entrad.btnModificar.setVisible(true);
-        consultesVehicles vehicle = new consultesVehicles();
-        DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel((Vector) vehicle.mostrarVehicle());
-        entrad.cbVehicle.setModel(modeloCombo);
-        
-
-        try {
-
-            Conexion con = new Conexion();
-
-            Connection conexion = con.getConnection();
-
-            ps = conexion.prepareStatement("Select t.Id, t.codi_tecnic, t.nom, t.cognoms, t.nif, t.adreça, t.tel_particular, t.tel_empresa, t.extensio, t.codi_postal, t.poblacio, v.matricula from tecnics t, vehicles v, detallsvehicle d where t.Id = ? AND t.id = d.idtecnic AND v.id=d.idvehicle");
-            //ps2 = conexion.prepareStatement("Select d.id, v.matricula from vehicles v, detallsVehicle d where d.idtecnic=? AND v.id = d.idvehicle");
-            ps.setInt(1, ((codigo)));
-            //ps2.setInt(1, ((codigo)));
-            rs = ps.executeQuery();
-            //rs2 = ps2.executeQuery();
-
-            while (rs.next()) {
-                entrad.txtNif.setText(rs.getString("Nif"));
-                entrad.txtAdreca.setText(rs.getString("Adreça"));
-                entrad.txtNom.setText(rs.getString("Nom"));
-                entrad.txtCodipostal.setText(rs.getString("Codi_Postal"));
-                entrad.txtCognoms.setText(rs.getString("Cognoms"));
-                entrad.txtPoblacio.setText(rs.getString("poblacio"));
-                entrad.txtCodi.setText(rs.getString("codi_tecnic"));
-                entrad.txtTelefonParticular.setText(rs.getString("tel_particular"));
-                entrad.txtTelefonEmpresa.setText(rs.getString("tel_empresa"));
-                entrad.txtExtensio.setText(rs.getString("extensio"));
-                entrad.txtId.setText(rs.getString("Id"));
-                entrad.txtVehicle.setText(rs.getString("matricula"));
-
-            }
-
-           //while (rs2.next()) {
-           //     entrad.txtIdVehicle.setText(rs2.getString("id"));
-           //     entrad.cbVehicle.addItem("matricula");
-           // }
-            rs.close();
-            //rs2.close();
-            //habilitarCampos(entrad.jPanel2, false);
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            System.out.println("Error " + ex);
-        }
-
-    }
-
-    public void carregaTaula() {
-        DefaultTableModel modeloTabla = new DefaultTableModel() {
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return false;
-            }
-
-        };
-        entrad.taulaTecnics.setModel(modeloTabla);
-        entrad.taulaTecnics.setRowSorter(new TableRowSorter<DefaultTableModel>(modeloTabla));
-        entrad.taulaTecnics.setAutoCreateRowSorter(true);
-        entrad.taulaTecnics.setBackground(Color.white);
-        entrad.taulaTecnics.setSelectionBackground(new Color(250, 201, 104));
-
-        entrad.txtId.setText(null);
-        //taulaTecnics.setEnabled(false);
-        entrad.btnModificar.setVisible(false);
-        entrad.jTabbedPane1.setSelectedIndex(0);
-
-        PreparedStatement ps;
-        ResultSet rs;
-
-        try {
-
-            Conexion con = new Conexion();
-
-            Connection conexion = con.getConnection();
-
-            ps = conexion.prepareStatement("Select Id, codi_tecnic, nom, cognoms, nif, poblacio from tecnics order by id");
-            rs = ps.executeQuery();
-            modeloTabla.addColumn("Id");
-            modeloTabla.addColumn("Codi");
-            modeloTabla.addColumn("nom");
-            modeloTabla.addColumn("cognoms");
-            modeloTabla.addColumn("nif");
-            modeloTabla.addColumn("poblacio");
-
-            while (rs.next()) {
-                Object fila[] = new Object[6];
-                for (int i = 0; i < 6; i++) {
-                    fila[i] = rs.getObject(i + 1);
-
-                }
-                modeloTabla.addRow(fila);
-            }
-            rs.close();
-            entrad.txtId.setText("1");
-
-        } catch (Exception e) {
-            System.err.println("Error " + e);
-
-        }
-    }
-
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
-            Vehicles vehicle = (Vehicles) entrad.cbVehicle.getSelectedItem();
 
             Conexion con = new Conexion();
             Connection conexion = con.getConnection();
