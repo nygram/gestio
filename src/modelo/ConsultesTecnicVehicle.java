@@ -39,11 +39,11 @@ public class ConsultesTecnicVehicle extends Conexion {
             }
 
         };
-        entrad.taulaTecnicVehicle.setModel(modeloTabla);
-        entrad.taulaTecnicVehicle.setRowSorter(new TableRowSorter<DefaultTableModel>(modeloTabla));
-        entrad.taulaTecnicVehicle.setAutoCreateRowSorter(true);
-        entrad.taulaTecnicVehicle.setBackground(Color.white);
-        entrad.taulaTecnicVehicle.setSelectionBackground(new Color(250, 201, 104));
+        entrad.taulaTecnics.setModel(modeloTabla);
+        entrad.taulaTecnics.setRowSorter(new TableRowSorter<DefaultTableModel>(modeloTabla));
+        entrad.taulaTecnics.setAutoCreateRowSorter(true);
+        entrad.taulaTecnics.setBackground(Color.white);
+        entrad.taulaTecnics.setSelectionBackground(new Color(250, 201, 104));
 
         entrad.txtId.setText(null);
         

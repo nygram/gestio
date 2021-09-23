@@ -32,20 +32,17 @@ import vista.VistaTecnicVehicle;
 import vista.vistaTecnic;
 import vista.vistaVehicle;
 //import vista.vistaTecnic;
+
 public class controladorTecnics implements ActionListener, MouseListener, WindowListener, KeyListener, ItemListener {
 
     private Tecnics tecnic;
-    private Vehicles vehicle;
-    private VehicleDetalls detalls;
     private vistaTecnic entrad;
     private consultesTecnics modelo;
-    private consultesVehicles consultes;
-    private vistaVehicle vehicles;
     Calendar fecha = Calendar.getInstance();
 
-    public controladorTecnics(Tecnics tecnic, vistaTecnic entrad, consultesTecnics modelo, VehicleDetalls detalls) {
+    public controladorTecnics(Tecnics tecnic, vistaTecnic entrad, consultesTecnics modelo) {
         this.tecnic = tecnic;
-        this.detalls = detalls;
+        //this.detalls = detalls;
         this.entrad = entrad;
         this.modelo = modelo;
         entrad.btnInsertar.addActionListener(this);
@@ -59,12 +56,12 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         entrad.btnBorrar.addActionListener(this);
         entrad.btnVehicles.addActionListener(this);
         entrad.btnDetalls.addActionListener(this);
-        
 
     }
 
     public void iniciar() {
-        entrad.setLocationRelativeTo(null);
+        entrad.setTitle("Tecnohome");
+        
 
     }
 
@@ -77,22 +74,21 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             if (me.getClickCount() == 2) {
                 entrad.jTabbedPane1.setSelectedIndex(1);
                 modelo.carregaTecnic(Integer.parseInt(codigo), entrad);
-                modelo.carregaVehicle(Integer.parseInt(codigo), entrad);
 
             }
 
         }
+        /*
         if (me.getSource() == entrad.jTabbedPane1) {
             if (entrad.jTabbedPane1.getSelectedIndex() == 1) {
                 String codi = entrad.txtId.getText();
                 modelo.carregaTecnic(Integer.parseInt(codi), entrad);
-                modelo.carregaVehicle(Integer.parseInt(codi), entrad);
             }
             if (entrad.jTabbedPane1.getSelectedIndex() == 0) {
                 entrad.btnModificar.setVisible(false);
             }
         }
-
+        */
     }
 
     @Override
@@ -157,7 +153,10 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             entrad.btnInsertar.setVisible(true);
             entrad.btnNuevo.setVisible(false);
             Campos.limpiarCampos(entrad.jPanel2);
-            consultes.mostrarVehicle();
+            if (entrad.txtId.getText().isEmpty()) {
+                entrad.txtId.setText("1");
+            }
+            //consultes.mostrarVehicle();
 
         }
         if (ae.getSource() == entrad.btnInsertar) {
@@ -172,21 +171,21 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             tecnic.setPoblacio(entrad.txtPoblacio.getText());
             tecnic.setTel_Empresa(Integer.parseInt(entrad.txtTelefonEmpresa.getText()));
             tecnic.setTel_Particular(Integer.parseInt(entrad.txtTelefonParticular.getText()));
-            detalls.setData_trans((Fechas.getFechaActual()));
-            detalls.setIdTecnic(Integer.parseInt(entrad.txtId.getText()));
-            detalls.setIdVehicle(Integer.parseInt(entrad.txtIdVehicle.getText()));
-
-            if (modelo.insertar(tecnic, detalls)) {
+            
+            if (modelo.insertar(tecnic)) {
                 entrad.jTabbedPane1.setSelectedIndex(0);
                 JOptionPane.showMessageDialog(null, "Insertado correctamente");
                 entrad.btnNuevo.setVisible(true);
                 modelo.carregaTaula(entrad);
+                
 
             } else {
                 JOptionPane.showMessageDialog(null, "No insertado");
+                entrad.btnNuevo.setVisible(true);
             }
 
         }
+
         if (ae.getSource() == entrad.btnSalir) {
             System.exit(0);
         }
@@ -213,7 +212,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             vista.setVisible(true);
 
         }
-        
+
         if (ae.getSource() == entrad.btnDetalls) {
 
             ConsultesTecnicVehicle consulta = new ConsultesTecnicVehicle();
@@ -229,63 +228,66 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
     }
 
     @Override
-    public void windowOpened(WindowEvent we
+    public void windowOpened(WindowEvent we){
+
+        entrad.txtId.setText("1");
+    }
+
+    @Override
+        public void windowClosing(WindowEvent we
     ) {
     }
 
     @Override
-    public void windowClosing(WindowEvent we
+        public void windowClosed(WindowEvent we
     ) {
     }
 
     @Override
-    public void windowClosed(WindowEvent we
+        public void windowIconified(WindowEvent we
     ) {
     }
 
     @Override
-    public void windowIconified(WindowEvent we
+        public void windowDeiconified(WindowEvent we
     ) {
     }
 
     @Override
-    public void windowDeiconified(WindowEvent we
-    ) {
-    }
-
-    @Override
-    public void windowActivated(WindowEvent we) {
+        public void windowActivated(WindowEvent we) {
         entrad.btnModificar.setVisible(false);
         entrad.btnInsertar.setVisible(false);
         modelo.carregaTaula(entrad);
+        entrad.txtId.setText("1");
 
     }
 
     @Override
-    public void windowDeactivated(WindowEvent we) {
+        public void windowDeactivated(WindowEvent we) {
 
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
+        public void keyTyped(KeyEvent e) {
 
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+        public void keyPressed(KeyEvent e) {
         int fila = entrad.taulaTecnics.getSelectedRow();
         String codigo = entrad.taulaTecnics.getValueAt(fila, 0).toString();
         entrad.txtId.setText(codigo);
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             entrad.jTabbedPane1.setSelectedIndex(1);
             modelo.carregaTecnic(Integer.parseInt(codigo), entrad);
-            modelo.carregaVehicle(Integer.parseInt(codigo), entrad);
+            //modelo.carregaVehicle(Integer.parseInt(codigo), entrad);
 
         }
+        
     }
 
     @Override
-    public void keyReleased(KeyEvent evt) {
+        public void keyReleased(KeyEvent evt) {
         try {
             if (evt.getKeyCode() == 38 || evt.getKeyCode() == 40) {
 
@@ -302,7 +304,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
     }
 
     @Override
-    public void itemStateChanged(ItemEvent e) {
+        public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
 
             Conexion con = new Conexion();
@@ -312,7 +314,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
                 ResultSet rs;
                 rs = ps.executeQuery();
 
-                entrad.txtIdVehicle.setText(rs.getString("id"));
+                //entrad.txtIdVehicle.setText(rs.getString("id"));
 
             } catch (Exception ex) {
                 System.out.println("Error " + ex);

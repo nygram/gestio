@@ -27,23 +27,15 @@ public class consultesTecnics extends Conexion {
     private vistaTecnic entrad;
     Date fecha;
 
-    public boolean insertar(Tecnics tecnics, VehicleDetalls vehicle) {
+    public boolean insertar(Tecnics tecnics) {
 
         Connection conexio = getConnection();
 
         try {
 
-            ps2 = conexio.prepareStatement("insert into detallsvehicle (data_trans, idTecnic, IdVehicle) values (?,?,?) ");
             ps = conexio.prepareStatement("insert into Tecnics (Codi_Tecnic, Nom, Cognoms, NIF, Adreça, Poblacio, Codi_Postal, Tel_Particular, Tel_Empresa, Extensio) values (?,?,?,?,?,?,?,?,?,?)");
 
-            ps2.setDate(1, vehicle.getData_trans());
-            System.out.println("lelo");
-            ps2.setInt(2, vehicle.getIdTecnic());
-            int tecnic = vehicle.getIdTecnic();
-            System.out.println("tecnic " + tecnic);
-            ps2.setInt(3, vehicle.getIdVehicle());
-            int vehiclenum = vehicle.getIdVehicle();
-            System.out.println("vehicle " + vehiclenum);
+           
             ps.setInt(1, tecnics.getCodi_Tecnic());
             ps.setString(2, tecnics.getNom());
             ps.setString(3, tecnics.getCognoms());
@@ -56,12 +48,12 @@ public class consultesTecnics extends Conexion {
             ps.setInt(10, tecnics.getExtensio());
 
             int result = ps.executeUpdate();
-            int result2 = ps2.executeUpdate();
 
-            if (result > 0 && result2 > 0) {
+            if (result > 0) {
                 return true;
 
             } else {
+                
                 return false;
             }
 
@@ -174,7 +166,7 @@ public class consultesTecnics extends Conexion {
             
             rs = ps.executeQuery();
             
-            entrad.txtVehicle.setText(rs.getString("matricula"));
+            //entrad.txtVehicle.setText(rs.getString("matricula"));
             
             
             rs.close();
@@ -190,6 +182,7 @@ public class consultesTecnics extends Conexion {
     public void carregaTecnic(int codigo, vistaTecnic entrad) {
 
         this.entrad = entrad;
+        this.codigo = codigo;
         PreparedStatement ps;
         ResultSet rs;
         entrad.btnModificar.setVisible(true);
@@ -278,13 +271,36 @@ public class consultesTecnics extends Conexion {
                 }
                 modeloTabla.addRow(fila);
             }
-            rs.close();
-            entrad.txtId.setText("1");
+            
+            
 
         } catch (Exception e) {
             System.err.println("Error " + e);
 
         }
     }
+     /*public void carregaCombo(vistaTecnic entrad) {
+         
+         Connection conexio = getConnection();
 
+        try {
+            ps = conexio.prepareStatement("select matricula from vehicles");
+            
+            rs = ps.executeQuery();
+            String
+            
+            entrad.cmbVehicle.addItem(URL);
+            
+            
+            ps.setInt(1, tecnics.getId());
+         
+         
+         
+         
+     }catch (Exception e){
+            System.err.println("Error "+ e);
+     }
+
+     }
+*/
 }
