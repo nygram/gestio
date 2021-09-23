@@ -52,6 +52,7 @@ public class ControladorEntrada implements ActionListener, MouseListener {
             consultesTecnics modelo = new consultesTecnics();
             controladorTecnics controlatecnics = new controladorTecnics(tecnic, v, modelo);
             v.setVisible(true);
+            v.txtId.setVisible(false);
         }
         if (e.getSource() == vista.btnVehicles) {
             Vehicles vehicle = new Vehicles();
@@ -59,11 +60,13 @@ public class ControladorEntrada implements ActionListener, MouseListener {
             consultesVehicles modelo = new consultesVehicles();
             controladorVehicles controlavehicles = new controladorVehicles(vehicle, v, modelo);
             v.setVisible(true);
+            
         }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
+       /*
         if (e.getSource() == vista.btnTecnics) {
             Tecnics tecnic = new Tecnics();
             vistaTecnic v = new vistaTecnic();
@@ -78,6 +81,7 @@ public class ControladorEntrada implements ActionListener, MouseListener {
             controladorVehicles controlavehicles = new controladorVehicles(vehicle, v, modelo);
             v.setVisible(true);
         }
+*/
     }
 
     @Override

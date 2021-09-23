@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import modelo.Conexion;
 import modelo.Tecnics;
@@ -232,16 +233,15 @@ public class consultesTecnics extends Conexion {
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return false;
             }
-
         };
         entrad.taulaTecnics.setModel(modeloTabla);
         entrad.taulaTecnics.setRowSorter(new TableRowSorter<DefaultTableModel>(modeloTabla));
         entrad.taulaTecnics.setAutoCreateRowSorter(true);
-        entrad.taulaTecnics.setBackground(Color.white);
+        entrad.taulaTecnics.setBackground(Color.WHITE);
         entrad.taulaTecnics.setSelectionBackground(new Color(250, 201, 104));
-
+        entrad.taulaTecnics.setOpaque(true);
+        
         entrad.txtId.setText(null);
-        //taulaTecnics.setEnabled(false);
         entrad.btnModificar.setVisible(false);
         entrad.jTabbedPane1.setSelectedIndex(0);
 
@@ -253,7 +253,7 @@ public class consultesTecnics extends Conexion {
             Conexion con = new Conexion();
 
             Connection conexion = con.getConnection();
-
+            
             ps = conexion.prepareStatement("Select Id, codi_tecnic, nom, cognoms, nif, poblacio from tecnics order by id");
             rs = ps.executeQuery();
             modeloTabla.addColumn("Id");
@@ -279,28 +279,5 @@ public class consultesTecnics extends Conexion {
 
         }
     }
-     /*public void carregaCombo(vistaTecnic entrad) {
-         
-         Connection conexio = getConnection();
-
-        try {
-            ps = conexio.prepareStatement("select matricula from vehicles");
-            
-            rs = ps.executeQuery();
-            String
-            
-            entrad.cmbVehicle.addItem(URL);
-            
-            
-            ps.setInt(1, tecnics.getId());
-         
-         
-         
-         
-     }catch (Exception e){
-            System.err.println("Error "+ e);
-     }
-
-     }
-*/
+     
 }

@@ -54,13 +54,14 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         entrad.btnModificar.addActionListener(this);
         entrad.btnNuevo.addActionListener(this);
         entrad.btnBorrar.addActionListener(this);
-        entrad.btnVehicles.addActionListener(this);
-        entrad.btnDetalls.addActionListener(this);
+        //entrad.btnVehicles.addActionListener(this);
+        //entrad.btnDetalls.addActionListener(this);
 
     }
 
     public void iniciar() {
         entrad.setTitle("Tecnohome");
+        
         
 
     }
@@ -187,7 +188,8 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         }
 
         if (ae.getSource() == entrad.btnSalir) {
-            System.exit(0);
+            entrad.setVisible(false);
+            
         }
         if (ae.getSource() == entrad.btnBorrar) {
 
@@ -203,28 +205,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
             }
 
         }
-        if (ae.getSource() == entrad.btnVehicles) {
-
-            consultesVehicles consultavehicle = new consultesVehicles();
-            Vehicles vehicle = new Vehicles();
-            vistaVehicle vista = new vistaVehicle();
-            controladorVehicles controlavehicles = new controladorVehicles(vehicle, vista, consultavehicle);
-            vista.setVisible(true);
-
-        }
-
-        if (ae.getSource() == entrad.btnDetalls) {
-
-            ConsultesTecnicVehicle consulta = new ConsultesTecnicVehicle();
-            Vehicles vehicle = new Vehicles();
-            Tecnics tecnic = new Tecnics();
-            VistaTecnicVehicle vista = new VistaTecnicVehicle();
-            VehicleDetalls detalls = new VehicleDetalls();
-            ControladorTecnicVehicle controlador = new ControladorTecnicVehicle(tecnic, vista, consulta, detalls, vehicle);
-            vista.setVisible(true);
-
-        }
-
+        
     }
 
     @Override
@@ -259,6 +240,7 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         entrad.btnInsertar.setVisible(false);
         modelo.carregaTaula(entrad);
         entrad.txtId.setText("1");
+        entrad.txtId.setVisible(false);
 
     }
 
