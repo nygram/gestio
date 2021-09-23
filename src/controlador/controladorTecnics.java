@@ -39,12 +39,13 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
     private vistaTecnic entrad;
     private consultesTecnics modelo;
     Calendar fecha = Calendar.getInstance();
+    
 
     public controladorTecnics(Tecnics tecnic, vistaTecnic entrad, consultesTecnics modelo) {
         this.tecnic = tecnic;
-        //this.detalls = detalls;
         this.entrad = entrad;
         this.modelo = modelo;
+        entrad.txtId.setText("1");
         entrad.btnInsertar.addActionListener(this);
         entrad.btnSalir.addActionListener(this);
         entrad.taulaTecnics.addMouseListener(this);
@@ -54,13 +55,14 @@ public class controladorTecnics implements ActionListener, MouseListener, Window
         entrad.btnModificar.addActionListener(this);
         entrad.btnNuevo.addActionListener(this);
         entrad.btnBorrar.addActionListener(this);
-        //entrad.btnVehicles.addActionListener(this);
-        //entrad.btnDetalls.addActionListener(this);
+        modelo.carregaTecnic(1, entrad);
+        
 
     }
 
     public void iniciar() {
         entrad.setTitle("Tecnohome");
+        
         
         
 

@@ -48,6 +48,7 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
         vistavehicle.btnNuevo.addActionListener(this);
         vistavehicle.btnSalir.addActionListener(this);
         vistavehicle.addWindowListener(this);
+        consvehicle.carregaVehicle(1, vistavehicle);
 
     }
 
@@ -76,7 +77,6 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
             if (consvehicle.insertar(vehicle)) {
                 vistavehicle.jTabbedPane1.setSelectedIndex(0);
                 JOptionPane.showMessageDialog(null, "Insertado correctamente");
-                //vistavehicle.btnNuevo.setVisible(true);
                 consvehicle.carregaTaula(vistavehicle);
 
             } else {
@@ -117,7 +117,6 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
                 if (consvehicle.modificar(vehicle)) {
                 vistavehicle.jTabbedPane1.setSelectedIndex(0);
                 JOptionPane.showMessageDialog(null, "Modificat correctament");
-                //vistavehicle.btnNuevo.setVisible(true);
                 consvehicle.carregaTaula(vistavehicle);
 
             } else {
@@ -134,10 +133,7 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
             vistavehicle.jTabbedPane1.setSelectedIndex(1);
             vistavehicle.btnInsertar.setVisible(true);
             vistavehicle.btnModificar.setVisible(false);
-            //vistavehicle.btnInsertar.setVisible(true);
-            //vistavehicle.btnNuevo.setVisible(false);
             Campos.limpiarCampos(vistavehicle.jPanel2);
-           // consvehicle.mostrarVehicle();
             vistavehicle.txtDataEntrada.setDate(Utils.Fechas.getFechaActual());
             vistavehicle.txtDataFinal.setDate(Utils.Fechas.getFechaActual());
             vistavehicle.txtPropRevisio.setDate(Utils.Fechas.getFechaActual());
@@ -166,17 +162,15 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
             }
 
         }
+        /*
         if (me.getSource() == vistavehicle.jTabbedPane1) {
             if (vistavehicle.jTabbedPane1.getSelectedIndex() == 1) {
                 String codi = vistavehicle.txtId.getText();
                 consvehicle.carregaVehicle(Integer.parseInt(codi), vistavehicle);
                 vistavehicle.btnModificar.setVisible(true);
             }
-            // if (vistavehicle.jTabbedPane1.getSelectedIndex() == 0) {
-            //     vistavehicle.btnModificar.setVisible(false);
-            // }
         }
-
+        */
     }
 
     @Override

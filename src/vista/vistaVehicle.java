@@ -137,16 +137,16 @@ public class vistaVehicle extends javax.swing.JFrame {
         jLabel10.setText("Detalls Vehicle");
 
         txtDataEntrada.setDate(Utils.Fechas.getFechaActual());
-        txtDataEntrada.setDateFormatString("dd/MM/YY");
+        txtDataEntrada.setDateFormatString("dd-MM-yyyy");
         txtDataEntrada.setMinSelectableDate(new java.util.Date(1609459293000L));
 
         txtDataFinal.setDate(Utils.Fechas.getFechaActual());
-        txtDataFinal.setDateFormatString("dd/MM/YY");
-        txtDataFinal.setMinSelectableDate(new java.util.Date(1577836893000L));
+        txtDataFinal.setDateFormatString("dd-MM-yyyy");
+        txtDataFinal.setMinSelectableDate(new java.util.Date(1609459293000L));
 
         txtPropRevisio.setDate(Utils.Fechas.getFechaActual());
-        txtPropRevisio.setDateFormatString("dd/MM/YY");
-        txtPropRevisio.setMinSelectableDate(new java.util.Date(1577836893000L));
+        txtPropRevisio.setDateFormatString("dd-MM-yyyy");
+        txtPropRevisio.setMinSelectableDate(new java.util.Date(1609459293000L));
 
         btnModificar.setText("Modificar");
 

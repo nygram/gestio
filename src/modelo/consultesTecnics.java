@@ -57,11 +57,11 @@ public class consultesTecnics extends Conexion {
                 
                 return false;
             }
-
+            
         } catch (Exception ex) {
             System.err.println("Error " + ex);
-
             return false;
+            
         } finally {
             try {
                 conexio.close();
@@ -167,9 +167,6 @@ public class consultesTecnics extends Conexion {
             
             rs = ps.executeQuery();
             
-            //entrad.txtVehicle.setText(rs.getString("matricula"));
-            
-            
             rs.close();
             
             
@@ -272,7 +269,7 @@ public class consultesTecnics extends Conexion {
                 modeloTabla.addRow(fila);
             }
             
-            
+            rs.close();
 
         } catch (Exception e) {
             System.err.println("Error " + e);

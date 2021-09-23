@@ -17,10 +17,6 @@ import vista.vistaVehicle;
 import modelo.Conexion;
 import vista.vistaTecnic;
 
-/**
- *
- * @author JavierFernándezDíaz
- */
 public class consultesVehicles extends Conexion {
 
     PreparedStatement ps;
@@ -166,6 +162,7 @@ public class consultesVehicles extends Conexion {
                 vehicle.setMarca(rs.getString("marca"));
                 listVehicles.add(vehicle);
             }
+            rs.close();
 
         } catch (Exception ex) {
             System.out.println("Error " + ex);
@@ -187,10 +184,7 @@ public class consultesVehicles extends Conexion {
         vista.taulaVehicles.setAutoCreateRowSorter(true);
         vista.taulaVehicles.setBackground(Color.white);
         vista.taulaVehicles.setSelectionBackground(new Color(250, 201, 104));
-
         vista.txtId.setText(null);
-        //taulaTecnics.setEnabled(false);
-        //entrad.btnModificar.setVisible(false);
         vista.jTabbedPane1.setSelectedIndex(0);
 
         PreparedStatement ps;
@@ -212,7 +206,6 @@ public class consultesVehicles extends Conexion {
                 Object fila[] = new Object[3];
                 for (int i = 0; i < 3; i++) {
                     fila[i] = rs.getObject(i + 1);
-
                 }
                 modeloTabla.addRow(fila);
             }
@@ -221,9 +214,7 @@ public class consultesVehicles extends Conexion {
 
         } catch (Exception e) {
             System.err.println("Error " + e);
-
         }
-
     }
 
     public void carregaVehicle(int codigo, vistaVehicle vista) {
@@ -231,7 +222,6 @@ public class consultesVehicles extends Conexion {
         this.vista = vista;
         PreparedStatement ps;
         ResultSet rs;
-        //vista.btnModificar.setVisible(true);
 
         try {
 
