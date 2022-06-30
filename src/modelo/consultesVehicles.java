@@ -38,8 +38,8 @@ public class consultesVehicles extends Conexion {
             ps.setString(5, vehicles.getRenting());
             ps.setDate(6, vehicles.getData_entrada());
             ps.setDate(7, vehicles.getDate_final());
-            ps.setString(8, vehicles.getPany_seguretat());
-            ps.setString(9, vehicles.getCopia_claus());
+            ps.setBoolean(8, vehicles.getPany_seguretat());
+            ps.setBoolean(9, vehicles.getCopia_claus());
             ps.setDate(10, vehicles.getPropera_revisio());
 
             int result = ps.executeUpdate();
@@ -111,8 +111,8 @@ public class consultesVehicles extends Conexion {
             ps.setString(5, vehicles.getRenting());
             ps.setDate(6, vehicles.getData_entrada());
             ps.setDate(7, vehicles.getDate_final());
-            ps.setString(8, vehicles.getPany_seguretat());
-            ps.setString(9, vehicles.getCopia_claus());
+            ps.setBoolean(8, vehicles.getPany_seguretat());
+            ps.setBoolean(9, vehicles.getCopia_claus());
             ps.setDate(10, vehicles.getPropera_revisio());
             ps.setInt(11, vehicles.getId());
 

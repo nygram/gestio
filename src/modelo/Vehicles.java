@@ -14,14 +14,14 @@ public class Vehicles {
     private String renting;
     private Date data_entrada;
     private Date date_final;
-    private String pany_seguretat;
-    private String copia_claus;
+    private Boolean pany_seguretat;
+    private Boolean copia_claus;
     private Date propera_revisio;
 
     public Vehicles() {
     }
 
-    public Vehicles(int Id, String matricula, String model, String combustible, Date data_entrada, Date date_final, String pany_seguretat, String copia_claus, Date propera_revisio) {
+    public Vehicles(int Id, String matricula, String model, String combustible, Date data_entrada, Date date_final, Boolean pany_seguretat, Boolean copia_claus, Date propera_revisio) {
         this.Id = Id;
         this.matricula = matricula;
         this.model = model;
@@ -83,19 +83,19 @@ public class Vehicles {
         this.date_final = date_final;
     }
 
-    public String getPany_seguretat() {
+    public Boolean getPany_seguretat() {
         return pany_seguretat;
     }
 
-    public void setPany_seguretat(String pany_seguretat) {
+    public void setPany_seguretat(Boolean pany_seguretat) {
         this.pany_seguretat = pany_seguretat;
     }
 
-    public String getCopia_claus() {
+    public Boolean getCopia_claus() {
         return copia_claus;
     }
 
-    public void setCopia_claus(String copia_claus) {
+    public void setCopia_claus(Boolean copia_claus) {
         this.copia_claus = copia_claus;
     }
      public Date getPropera_revisio() {

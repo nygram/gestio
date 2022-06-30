@@ -24,7 +24,7 @@ import javax.swing.table.TableRowSorter;
 import modelo.Conexion;
 import modelo.ConsultesTecnicVehicle;
 import modelo.Tecnics;
-import modelo.VehicleDetalls;
+//import modelo.VehicleDetalls;
 import modelo.Vehicles;
 import modelo.consultesTecnics;
 import modelo.consultesVehicles;

@@ -2,7 +2,7 @@ package Utils;
 
 import java.text.SimpleDateFormat;
 import java.sql.Date;
-import vista.vistaVehicle;
+import vista.VistaVehicle;
 
 public class Fechas {
 

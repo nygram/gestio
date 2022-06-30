@@ -70,9 +70,9 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
             vehicle.setData_entrada(Fechas.dameFecha(vistavehicle.txtDataEntrada));
             vehicle.setDate_final(Fechas.dameFecha(vistavehicle.txtDataFinal));
             vehicle.setCombustible(vistavehicle.txtCombustible.getText());
-            vehicle.setPany_seguretat(vistavehicle.txtPany.getText());
+            vehicle.setPany_seguretat(vistavehicle.checkbox1.getState());
             vehicle.setPropera_revisio(Fechas.dameFecha(vistavehicle.txtPropRevisio));
-            vehicle.setCopia_claus(vistavehicle.txtCopiaClaus.getText());
+            vehicle.setCopia_claus(vistavehicle.checkbox2.getState());
 
             if (consvehicle.insertar(vehicle)) {
                 vistavehicle.jTabbedPane1.setSelectedIndex(0);
@@ -109,9 +109,9 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
                 vehicle.setData_entrada(Fechas.dameFecha(vistavehicle.txtDataEntrada));
                 vehicle.setDate_final(Fechas.dameFecha(vistavehicle.txtDataFinal));
                 vehicle.setCombustible(vistavehicle.txtCombustible.getText());
-                vehicle.setPany_seguretat(vistavehicle.txtPany.getText());
+                vehicle.setPany_seguretat(vistavehicle.checkbox1.getState());
                 vehicle.setPropera_revisio(Fechas.dameFecha(vistavehicle.txtPropRevisio));
-                vehicle.setCopia_claus(vistavehicle.txtCopiaClaus.getText());
+                vehicle.setCopia_claus(vistavehicle.checkbox2.getState());
                 vehicle.setId(Integer.parseInt(vistavehicle.txtId.getText()));
 
                 if (consvehicle.modificar(vehicle)) {

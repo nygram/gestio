@@ -2,21 +2,21 @@ package modelo;
 
 import java.sql.Date;
 
-public class VehicleDetalls {
+public class DetallVehicle {
 
     private int Id;
     private java.sql.Date data_trans;
     private int IdTecnic;
     private int IdVehicle;
 
-    public VehicleDetalls(int Id, java.sql.Date data_trans, int IdTecnic, int IdVehicle) {
+    public DetallVehicle(int Id, java.sql.Date data_trans, int IdTecnic, int IdVehicle) {
         this.Id = Id;
         this.data_trans = data_trans;
         this.IdTecnic = IdTecnic;
         this.IdVehicle = IdVehicle;
     }
 
-    public VehicleDetalls() {
+    public DetallVehicle() {
         
     }
     

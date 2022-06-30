@@ -4,7 +4,7 @@ import controlador.ControladorEntrada;
 import controlador.controladorTecnics;
 import controlador.controladorVehicles;
 import modelo.Tecnics;
-import modelo.VehicleDetalls;
+//import modelo.VehicleDetalls;
 import modelo.Vehicles;
 import modelo.consultesTecnics;
 import modelo.consultesVehicles;

@@ -14,7 +14,7 @@ import java.awt.event.WindowListener;
 import java.util.Calendar;
 import modelo.ConsultesTecnicVehicle;
 import modelo.Tecnics;
-import modelo.VehicleDetalls;
+//import modelo.VehicleDetalls;
 import modelo.Vehicles;
 import modelo.consultesTecnics;
 import modelo.consultesVehicles;
@@ -28,16 +28,16 @@ import vista.VistaTecnicVehicle;
 
     private Tecnics tecnic;
     private Vehicles vehicle;
-    private VehicleDetalls detalls;
+    //private VehicleDetalls detalls;
     private VistaTecnicVehicle entrad;
     private ConsultesTecnicVehicle modelo;
     private consultesVehicles consultes;
     private vistaVehicle vehicles;
     Calendar fecha = Calendar.getInstance();
 
-    public ControladorTecnicVehicle(Tecnics tecnic, VistaTecnicVehicle entrad, ConsultesTecnicVehicle modelo, VehicleDetalls detalls, Vehicles vehicle) {
+    public ControladorTecnicVehicle(Tecnics tecnic, VistaTecnicVehicle entrad, ConsultesTecnicVehicle modelo, Vehicles vehicle) {
         this.tecnic = tecnic;
-        this.detalls = detalls;
+        //this.detalls = detalls;
         this.entrad = entrad;
         this.modelo = modelo;
         this.vehicle = vehicle;
