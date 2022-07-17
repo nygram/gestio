@@ -94,6 +94,7 @@ public class consultesTecnics extends Conexion {
             int result = ps.executeUpdate();
 
             if (result > 0) {
+                System.out.println("Resut = "+result);
                 return true;
 
             } else {

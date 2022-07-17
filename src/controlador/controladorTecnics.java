@@ -22,16 +22,12 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import modelo.Conexion;
-import modelo.ConsultesTecnicVehicle;
 import modelo.Tecnics;
-//import modelo.VehicleDetalls;
 import modelo.Vehicles;
 import modelo.consultesTecnics;
 import modelo.consultesVehicles;
-import vista.VistaTecnicVehicle;
 import vista.vistaTecnic;
 import vista.vistaVehicle;
-//import vista.vistaTecnic;
 
 public class controladorTecnics implements ActionListener, MouseListener, WindowListener, KeyListener, ItemListener {
 

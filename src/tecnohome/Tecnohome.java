@@ -1,8 +1,13 @@
 package tecnohome;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import controlador.ControladorEntrada;
 import controlador.controladorTecnics;
 import controlador.controladorVehicles;
+import javax.swing.UIManager;
 import modelo.Tecnics;
 //import modelo.VehicleDetalls;
 import modelo.Vehicles;
@@ -16,6 +21,12 @@ import vista.vistaVehicle;
 public class Tecnohome {
 
     public static void main(String[] args) {
+        
+        try{
+        UIManager.setLookAndFeel(new FlatIntelliJLaf());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         
         //Tecnics tecnic = new Tecnics();
         //consultesTecnics modelo = new consultesTecnics();

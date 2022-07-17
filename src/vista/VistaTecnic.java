@@ -3,15 +3,17 @@ package vista;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import static modelo.Conexion.Contrasenya;
 import static modelo.Conexion.URL;
 import static modelo.Conexion.Usuari;
+import com.formdev.flatlaf.FlatIntelliJLaf;
 
 
 public class VistaTecnic extends javax.swing.JFrame {
-
-   
+       
     public VistaTecnic() {
+       
         initComponents();
         this.setLocationRelativeTo(null);
     }

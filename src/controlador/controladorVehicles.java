@@ -23,8 +23,10 @@ import modelo.Vehicles;
 import modelo.consultesVehicles;
 import vista.vistaVehicle;
 import Utils.Fechas;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
-public class controladorVehicles implements ActionListener, MouseListener, WindowListener, KeyListener {
+public class controladorVehicles implements ActionListener, MouseListener, WindowListener, KeyListener, ItemListener {
 
     private Vehicles vehicle;
     //private vistaTecnic vista;
@@ -32,6 +34,7 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
     private consultesVehicles consvehicle;
     java.util.Date date = new java.util.Date();
     java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+  
 
     public controladorVehicles(Vehicles vehicle, vistaVehicle vistavehicle, consultesVehicles consvehicle) {
         this.vehicle = vehicle;
@@ -113,6 +116,7 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
                 vehicle.setPropera_revisio(Fechas.dameFecha(vistavehicle.txtPropRevisio));
                 vehicle.setCopia_claus(vistavehicle.checkbox2.getState());
                 vehicle.setId(Integer.parseInt(vistavehicle.txtId.getText()));
+                
 
                 if (consvehicle.modificar(vehicle)) {
                 vistavehicle.jTabbedPane1.setSelectedIndex(0);
@@ -143,6 +147,7 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
             vistavehicle.setVisible(false);
             
         }
+       
 
     }
 
@@ -162,15 +167,7 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
             }
 
         }
-        /*
-        if (me.getSource() == vistavehicle.jTabbedPane1) {
-            if (vistavehicle.jTabbedPane1.getSelectedIndex() == 1) {
-                String codi = vistavehicle.txtId.getText();
-                consvehicle.carregaVehicle(Integer.parseInt(codi), vistavehicle);
-                vistavehicle.btnModificar.setVisible(true);
-            }
-        }
-        */
+      
     }
 
     @Override
@@ -214,6 +211,7 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
     public void windowActivated(WindowEvent e) {
         consvehicle.carregaTaula(vistavehicle);
         vistavehicle.btnInsertar.setVisible(false);
+        
 
     }
 
@@ -231,6 +229,15 @@ public class controladorVehicles implements ActionListener, MouseListener, Windo
 
     @Override
     public void keyReleased(KeyEvent e) {
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent ie) {
+         if(ie.getSource() == vistavehicle.checkbox1){
+            
+                vistavehicle.txtDataFinal.setVisible(true);
+            
+        }
     }
 
 }

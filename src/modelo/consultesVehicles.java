@@ -241,8 +241,8 @@ public class consultesVehicles extends Conexion {
                 vista.txtRenting.setText(rs.getString("renting"));
                 vista.txtDataEntrada.setDate(rs.getDate("data_entrada"));
                 vista.txtDataFinal.setDate(rs.getDate("data_final"));
-                vista.txtPany.setText(rs.getString("pany_seguretat"));
-                vista.txtCopiaClaus.setText(rs.getString("copiaclaus"));
+                vista.checkbox1.setState(rs.getBoolean("pany_seguretat"));
+                vista.checkbox2.setState(rs.getBoolean("copiaclaus"));
                 vista.txtPropRevisio.setDate(rs.getDate("propera_revisio"));
 
             }
